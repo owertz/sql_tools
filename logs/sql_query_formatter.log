@@ -1,49 +1,79 @@
-2022-09-08 12:06:56,411 - root - INFO - Log level: DEBUG
-2022-09-08 12:06:56,411 - root - INFO - MODULE_PATH: C:\Users\owertz\OneDrive - Sopra Steria\Documents\TICKETING\PYTHON\Scripts\sql_tools\sql_tools
-2022-09-08 12:06:56,411 - root - INFO - MAIN_PATH: C:\Users\owertz\OneDrive - Sopra Steria\Documents\TICKETING\PYTHON\Scripts\sql_tools
-2022-09-08 12:06:56,411 - root - INFO - LOGFILE_PATH: C:\Users\owertz\OneDrive - Sopra Steria\Documents\TICKETING\PYTHON\Scripts\sql_tools\logs\sql_query_formatter.log
-2022-09-08 12:06:56,411 - root - INFO - config: ROOT_PATH: 'C:\Users\owertz\OneDrive - Sopra Steria\Documents\TICKETING\PYTHON\Scripts\sql_tools'
-2022-09-08 12:06:56,411 - root - INFO - config: SQL_FILE_PATH: 'sql_file'
-2022-09-08 12:06:56,411 - root - INFO - config: SQL_FILE: 'input.sql'
-2022-09-08 12:06:56,411 - root - INFO - config: OUTPUT_FILE: 'output.sql'
-2022-09-08 12:06:56,411 - root - INFO - config: UNITTEST: 'False'
-2022-09-08 12:06:56,411 - root - INFO - config: LOG_LEVEL: 'DEBUG'
-2022-09-08 12:06:56,411 - root - INFO - config: LOGS_PATH: 'logs'
-2022-09-08 12:06:56,412 - root - INFO - config: LOG_FILE: 'sql_query_formatter.log'
-2022-09-08 12:06:56,412 - root - INFO - config: KEYWORDS_CASE: 'upperCase'
-2022-09-08 12:06:56,412 - root - INFO - Input query: 'select * from disctr_md_mandateoncontract;'
-2022-09-08 12:06:56,412 - root - INFO - Number of identified queries?: 1
-2022-09-08 12:06:56,412 - root - DEBUG - original raw query: |'select * from disctr_md_mandateoncontract;'|
-2022-09-08 12:06:56,412 - root - DEBUG - original query: |select * from disctr_md_mandateoncontract;|
-2022-09-08 12:06:56,412 - root - DEBUG - linearized: |select * from disctr_md_mandateoncontract;|
-2022-09-08 12:06:56,412 - root - DEBUG - lowerSQLQuery: |select * from disctr_md_mandateoncontract;|
-2022-09-08 12:06:56,412 - root - DEBUG - groupMultiKeywords: |select * from disctr_md_mandateoncontract;|
-2022-09-08 12:06:56,413 - root - DEBUG - caseSQLKeywords: |SELECT * FROM disctr_md_mandateoncontract;|
-2022-09-08 12:06:56,413 - root - DEBUG - addEnd: |SELECT * FROM disctr_md_mandateoncontract;|
-2022-09-08 12:06:56,415 - root - DEBUG - removeMultipleSpaces: |SELECT * FROM disctr_md_mandateoncontract ;|
-2022-09-08 12:06:56,415 - root - DEBUG - splitQuery: |['SELECT', '*', 'FROM', 'disctr_md_mandateoncontract', ';']|
-2022-09-08 12:06:56,415 - root - DEBUG - k=  0: element --> |SELECT|
-2022-09-08 12:06:56,415 - root - DEBUG - _is_a_comment: False
-2022-09-08 12:06:56,415 - root - DEBUG - result: ['SELECT\n']
-2022-09-08 12:06:56,415 - root - DEBUG - k=  1: element --> |*|
-2022-09-08 12:06:56,415 - root - DEBUG - _is_a_comment: False
-2022-09-08 12:06:56,415 - root - DEBUG - result: ['SELECT\n', '    *\n']
-2022-09-08 12:06:56,415 - root - DEBUG - k=  2: element --> |FROM|
-2022-09-08 12:06:56,415 - root - DEBUG - _is_a_comment: False
-2022-09-08 12:06:56,415 - root - DEBUG - result: ['SELECT\n', '    *\n', 'FROM\n']
-2022-09-08 12:06:56,415 - root - DEBUG - k=  3: element --> |disctr_md_mandateoncontract|
-2022-09-08 12:06:56,415 - root - DEBUG - _is_a_comment: False
-2022-09-08 12:06:56,415 - root - DEBUG - result: ['SELECT\n', '    *\n', 'FROM\n', '    disctr_md_mandateoncontract\n']
-2022-09-08 12:06:56,415 - root - DEBUG - k=  4: element --> |;|
-2022-09-08 12:06:56,415 - root - DEBUG - result: ['SELECT\n', '    *\n', 'FROM\n', '    disctr_md_mandateoncontract\n', ';']
-2022-09-08 12:06:56,415 - root - DEBUG - ungroupMultiKeywords: |SELECT
-    *
-FROM
-    disctr_md_mandateoncontract
+2022-09-08 15:41:29,081 - root - INFO - Log level: DEBUG
+2022-09-08 15:41:29,084 - root - INFO - MODULE_PATH: C:\Users\owertz\OneDrive - Sopra Steria\Documents\TICKETING\PYTHON\Scripts\sql_tools\sql_tools
+2022-09-08 15:41:29,086 - root - INFO - MAIN_PATH: C:\Users\owertz\OneDrive - Sopra Steria\Documents\TICKETING\PYTHON\Scripts\sql_tools
+2022-09-08 15:41:29,086 - root - INFO - LOGFILE_PATH: C:\Users\owertz\OneDrive - Sopra Steria\Documents\TICKETING\PYTHON\Scripts\sql_tools\logs\sql_query_formatter.log
+2022-09-08 15:41:29,087 - root - INFO - INPUTFILE_PATH: C:\Users\owertz\OneDrive - Sopra Steria\Documents\TICKETING\PYTHON\Scripts\sql_tools\sql_file\input.sql
+2022-09-08 15:41:29,087 - root - INFO - OUTPUTFILE_PATH: C:\Users\owertz\OneDrive - Sopra Steria\Documents\TICKETING\PYTHON\Scripts\sql_tools\sql_file\output.sql
+2022-09-08 15:41:29,087 - root - INFO - config: ROOT_PATH: 'C:\Users\owertz\OneDrive - Sopra Steria\Documents\TICKETING\PYTHON\Scripts\sql_tools'
+2022-09-08 15:41:29,088 - root - INFO - config: SQL_FILE_PATH: 'sql_file'
+2022-09-08 15:41:29,088 - root - INFO - config: SQL_FILE: 'input.sql'
+2022-09-08 15:41:29,088 - root - INFO - config: OUTPUT_FILE: 'output.sql'
+2022-09-08 15:41:29,088 - root - INFO - config: UNITTEST: 'False'
+2022-09-08 15:41:29,088 - root - INFO - config: LOG_LEVEL: 'DEBUG'
+2022-09-08 15:41:29,088 - root - INFO - config: LOGS_PATH: 'logs'
+2022-09-08 15:41:29,089 - root - INFO - config: LOG_FILE: 'sql_query_formatter.log'
+2022-09-08 15:41:29,089 - root - INFO - config: KEYWORDS_CASE: 'upperCase'
+2022-09-08 15:41:29,089 - root - INFO - Script arguments: <__main__.MyParser object at 0x0000017F28F5EE00>
+2022-09-08 15:41:29,090 - root - INFO - Read the file 'C:\Users\owertz\OneDrive - Sopra Steria\Documents\TICKETING\PYTHON\Scripts\sql_tools\sql_file\input.sql' and extract the query.
+2022-09-08 15:41:29,092 - root - INFO - Number of query(ies) detected: 1
+2022-09-08 15:41:29,092 - root - INFO - Formating process: STARTING ...
+2022-09-08 15:41:29,093 - root - DEBUG - original raw query: |'select numtie from (select x from pyd01);'|
+2022-09-08 15:41:29,093 - root - DEBUG - original query: |select numtie from (select x from pyd01);|
+2022-09-08 15:41:29,093 - root - DEBUG - linearized: |select numtie from (select x from pyd01);|
+2022-09-08 15:41:29,093 - root - DEBUG - lowerSQLQuery: |select numtie from (select x from pyd01);|
+2022-09-08 15:41:29,094 - root - DEBUG - groupMultiKeywords: |select numtie from (select x from pyd01);|
+2022-09-08 15:41:29,104 - root - DEBUG - caseSQLKeywords: |SELECT numtie FROM (SELECT x FROM pyd01);|
+2022-09-08 15:41:29,104 - root - DEBUG - addEnd: |SELECT numtie FROM (SELECT x FROM pyd01);|
+2022-09-08 15:41:29,108 - root - DEBUG - removeMultipleSpaces: |SELECT numtie FROM ( SELECT x FROM pyd01 ) ;|
+2022-09-08 15:41:29,109 - root - DEBUG - splitQuery: |['SELECT', 'numtie', 'FROM', '(', 'SELECT', 'x', 'FROM', 'pyd01', ')', ';']|
+2022-09-08 15:41:29,110 - root - DEBUG - k=  0: element --> |SELECT|
+2022-09-08 15:41:29,110 - root - DEBUG - _is_a_comment: False
+2022-09-08 15:41:29,110 - root - DEBUG - result: ['SELECT\n']
+2022-09-08 15:41:29,111 - root - DEBUG - k=  1: element --> |numtie|
+2022-09-08 15:41:29,111 - root - DEBUG - _is_a_comment: False
+2022-09-08 15:41:29,112 - root - DEBUG - result: ['SELECT\n', '    numtie\n']
+2022-09-08 15:41:29,112 - root - DEBUG - k=  2: element --> |FROM|
+2022-09-08 15:41:29,112 - root - DEBUG - _is_a_comment: False
+2022-09-08 15:41:29,113 - root - DEBUG - result: ['SELECT\n', '    numtie\n', 'FROM\n']
+2022-09-08 15:41:29,113 - root - DEBUG - k=  3: element --> |(|
+2022-09-08 15:41:29,113 - root - DEBUG - _is_a_comment: False
+2022-09-08 15:41:29,114 - root - DEBUG - result: ['SELECT\n', '    numtie\n', 'FROM', '(']
+2022-09-08 15:41:29,114 - root - DEBUG - k=  4: element --> |SELECT|
+2022-09-08 15:41:29,114 - root - DEBUG - k=  0: element --> |SELECT|
+2022-09-08 15:41:29,114 - root - DEBUG - _is_a_comment: False
+2022-09-08 15:41:29,115 - root - DEBUG - result: ['    SELECT\n']
+2022-09-08 15:41:29,115 - root - DEBUG - k=  1: element --> |x|
+2022-09-08 15:41:29,116 - root - DEBUG - _is_a_comment: False
+2022-09-08 15:41:29,116 - root - DEBUG - result: ['    SELECT\n', '        x\n']
+2022-09-08 15:41:29,117 - root - DEBUG - k=  2: element --> |FROM|
+2022-09-08 15:41:29,117 - root - DEBUG - _is_a_comment: False
+2022-09-08 15:41:29,117 - root - DEBUG - result: ['    SELECT\n', '        x\n', '    FROM\n']
+2022-09-08 15:41:29,117 - root - DEBUG - k=  3: element --> |pyd01|
+2022-09-08 15:41:29,118 - root - DEBUG - _is_a_comment: False
+2022-09-08 15:41:29,118 - root - DEBUG - result: ['    SELECT\n', '        x\n', '    FROM\n', '        pyd01\n']
+2022-09-08 15:41:29,118 - root - DEBUG - k=  4: element --> |)|
+2022-09-08 15:41:29,118 - root - DEBUG - _is_a_comment: False
+2022-09-08 15:41:29,119 - root - DEBUG - result: ['SELECT\n', '    numtie\n', 'FROM', '(', '    SELECT\n', '        x\n', '    FROM\n', '        pyd01\n', ')\n']
+2022-09-08 15:41:29,119 - root - DEBUG - k=  5: element --> |x|
+2022-09-08 15:41:29,119 - root - DEBUG - k=  6: element --> |FROM|
+2022-09-08 15:41:29,119 - root - DEBUG - k=  7: element --> |pyd01|
+2022-09-08 15:41:29,119 - root - DEBUG - k=  8: element --> |)|
+2022-09-08 15:41:29,119 - root - DEBUG - k=  9: element --> |;|
+2022-09-08 15:41:29,120 - root - DEBUG - result: ['SELECT\n', '    numtie\n', 'FROM', '(', '    SELECT\n', '        x\n', '    FROM\n', '        pyd01\n', ')\n', ';']
+2022-09-08 15:41:29,122 - root - DEBUG - ungroupMultiKeywords: |SELECT
+    numtie
+FROM(    SELECT
+        x
+    FROM
+        pyd01
+)
 ;|
-2022-09-08 12:06:56,416 - root - DEBUG - caseSQLKeywords: |SELECT
-    *
-FROM
-    disctr_md_mandateoncontract
+2022-09-08 15:41:29,123 - root - DEBUG - caseSQLKeywords: |SELECT
+    numtie
+FROM(    SELECT
+        x
+    FROM
+        pyd01
+)
 ;|
-2022-09-08 12:06:56,418 - werkzeug - INFO - 127.0.0.1 - - [08/Sep/2022 12:06:56] "POST /queryformatter HTTP/1.1" 200 -
+2022-09-08 15:41:29,124 - root - INFO - Formating process: DONE
