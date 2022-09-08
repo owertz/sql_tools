@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block clear %}
+<a class="navbar-brand" href="{{ url_for('sqlplusformatter')}}">Clear</a>
+<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+</button>
+{% endblock %}
+
+{% block content %}
+<h1>{% block title %} SQL*Plus result formatter {% endblock %}</h1>
+<p>
+Write your unreadable SQL*Plus output here and press submit.<br/>
+Copy/paste the result in your favorite text editor.<br/>
+Read.
+</p>
+<form method="post">
+    <div class="form-group">
+        <label for="content">Input:</label>
+        <textarea name="content" placeholder="Write your SQL*Plus output here" rows="5" cols="140" style="font-family: monospace"
+                  class="form-control">{{ request.form['content'] }}</textarea>
+    </div>
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+    <br/>
+    Result:
+    <textarea name="result" rows="20" cols="136" style="font-family: monospace; font-size:14px; color:#24788F">
+{{ myquerymysqlplusoutput }}
+        </textarea>
+</form>
+{% endblock %}

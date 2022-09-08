@@ -1,0 +1,49 @@
+2022-09-08 12:06:56,411 - root - INFO - Log level: DEBUG
+2022-09-08 12:06:56,411 - root - INFO - MODULE_PATH: C:\Users\owertz\OneDrive - Sopra Steria\Documents\TICKETING\PYTHON\Scripts\sql_tools\sql_tools
+2022-09-08 12:06:56,411 - root - INFO - MAIN_PATH: C:\Users\owertz\OneDrive - Sopra Steria\Documents\TICKETING\PYTHON\Scripts\sql_tools
+2022-09-08 12:06:56,411 - root - INFO - LOGFILE_PATH: C:\Users\owertz\OneDrive - Sopra Steria\Documents\TICKETING\PYTHON\Scripts\sql_tools\logs\sql_query_formatter.log
+2022-09-08 12:06:56,411 - root - INFO - config: ROOT_PATH: 'C:\Users\owertz\OneDrive - Sopra Steria\Documents\TICKETING\PYTHON\Scripts\sql_tools'
+2022-09-08 12:06:56,411 - root - INFO - config: SQL_FILE_PATH: 'sql_file'
+2022-09-08 12:06:56,411 - root - INFO - config: SQL_FILE: 'input.sql'
+2022-09-08 12:06:56,411 - root - INFO - config: OUTPUT_FILE: 'output.sql'
+2022-09-08 12:06:56,411 - root - INFO - config: UNITTEST: 'False'
+2022-09-08 12:06:56,411 - root - INFO - config: LOG_LEVEL: 'DEBUG'
+2022-09-08 12:06:56,411 - root - INFO - config: LOGS_PATH: 'logs'
+2022-09-08 12:06:56,412 - root - INFO - config: LOG_FILE: 'sql_query_formatter.log'
+2022-09-08 12:06:56,412 - root - INFO - config: KEYWORDS_CASE: 'upperCase'
+2022-09-08 12:06:56,412 - root - INFO - Input query: 'select * from disctr_md_mandateoncontract;'
+2022-09-08 12:06:56,412 - root - INFO - Number of identified queries?: 1
+2022-09-08 12:06:56,412 - root - DEBUG - original raw query: |'select * from disctr_md_mandateoncontract;'|
+2022-09-08 12:06:56,412 - root - DEBUG - original query: |select * from disctr_md_mandateoncontract;|
+2022-09-08 12:06:56,412 - root - DEBUG - linearized: |select * from disctr_md_mandateoncontract;|
+2022-09-08 12:06:56,412 - root - DEBUG - lowerSQLQuery: |select * from disctr_md_mandateoncontract;|
+2022-09-08 12:06:56,412 - root - DEBUG - groupMultiKeywords: |select * from disctr_md_mandateoncontract;|
+2022-09-08 12:06:56,413 - root - DEBUG - caseSQLKeywords: |SELECT * FROM disctr_md_mandateoncontract;|
+2022-09-08 12:06:56,413 - root - DEBUG - addEnd: |SELECT * FROM disctr_md_mandateoncontract;|
+2022-09-08 12:06:56,415 - root - DEBUG - removeMultipleSpaces: |SELECT * FROM disctr_md_mandateoncontract ;|
+2022-09-08 12:06:56,415 - root - DEBUG - splitQuery: |['SELECT', '*', 'FROM', 'disctr_md_mandateoncontract', ';']|
+2022-09-08 12:06:56,415 - root - DEBUG - k=  0: element --> |SELECT|
+2022-09-08 12:06:56,415 - root - DEBUG - _is_a_comment: False
+2022-09-08 12:06:56,415 - root - DEBUG - result: ['SELECT\n']
+2022-09-08 12:06:56,415 - root - DEBUG - k=  1: element --> |*|
+2022-09-08 12:06:56,415 - root - DEBUG - _is_a_comment: False
+2022-09-08 12:06:56,415 - root - DEBUG - result: ['SELECT\n', '    *\n']
+2022-09-08 12:06:56,415 - root - DEBUG - k=  2: element --> |FROM|
+2022-09-08 12:06:56,415 - root - DEBUG - _is_a_comment: False
+2022-09-08 12:06:56,415 - root - DEBUG - result: ['SELECT\n', '    *\n', 'FROM\n']
+2022-09-08 12:06:56,415 - root - DEBUG - k=  3: element --> |disctr_md_mandateoncontract|
+2022-09-08 12:06:56,415 - root - DEBUG - _is_a_comment: False
+2022-09-08 12:06:56,415 - root - DEBUG - result: ['SELECT\n', '    *\n', 'FROM\n', '    disctr_md_mandateoncontract\n']
+2022-09-08 12:06:56,415 - root - DEBUG - k=  4: element --> |;|
+2022-09-08 12:06:56,415 - root - DEBUG - result: ['SELECT\n', '    *\n', 'FROM\n', '    disctr_md_mandateoncontract\n', ';']
+2022-09-08 12:06:56,415 - root - DEBUG - ungroupMultiKeywords: |SELECT
+    *
+FROM
+    disctr_md_mandateoncontract
+;|
+2022-09-08 12:06:56,416 - root - DEBUG - caseSQLKeywords: |SELECT
+    *
+FROM
+    disctr_md_mandateoncontract
+;|
+2022-09-08 12:06:56,418 - werkzeug - INFO - 127.0.0.1 - - [08/Sep/2022 12:06:56] "POST /queryformatter HTTP/1.1" 200 -
