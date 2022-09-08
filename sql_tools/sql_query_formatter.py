@@ -388,7 +388,7 @@ def insertNewLineAndSpaces(query: list, prespaces=Constants.EMPTY_SPACE.value, b
             _following_listagg = False
             _spaces_added_listagg = False
 
-        if k < _k_pass: # breakpoint
+        if k < _k_pass: # breakpoint 2
             if element.strip() == Constants.PARENTHESIS_CLOSE.value and _within_subblock:
                 _within_subblock -= 1
             continue
