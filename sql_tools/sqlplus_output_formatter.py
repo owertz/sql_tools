@@ -47,8 +47,11 @@ Content
       
 FIXME
 -----
-Not yet.
+[ F ] Bug when the header lies on one line.
+[ 2 ] Manage the "x rows selected." at the end of the output
 """
+
+
 # SQL CONFIGURATION
 SQL_TEMP_FILENAME = '_temp.sql' 
 SELECT = 'select'
@@ -1037,16 +1040,70 @@ if __name__ == '__main__':
     ##main(args=myargs)
 
 
-    sqlplus_input = """          REFNUM
-----------------
-B4B09PZWXA8M3VES 
-A3J03FQKOR7H9NIB 
-B3I02ZHRVZ9V6RED 
-A6K04UZJNV8L1OJD 
-C3L11EYGNJ8K2WIT 
-          REFNUM
-----------------
-C5D26TVCUS3P9EGE 
-B7D17MNTYH8P8DGY 
+    sqlplus_input = """USERNAME
+--------------------------------------------------------------------------------
+SYS
+SYSTEM
+XS$NULL
+OJVMSYS
+LBACSYS
+OUTLN
+SYS$UMF
+DBSNMP
+APPQOSSYS
+DBSFWUSER
+GGSYS
+
+
+
+USERNAME
+--------------------------------------------------------------------------------
+ANONYMOUS
+CTXSYS
+DVSYS
+DVF
+GSMADMIN_INTERNAL
+MDSYS
+OLAPSYS
+XDB
+WMSYS
+GSMCATUSER
+MDDATA
+
+
+
+USERNAME
+--------------------------------------------------------------------------------
+SYSBACKUP
+REMOTE_SCHEDULER_AGENT
+GSMUSER
+SYSRAC
+GSMROOTUSER
+SI_INFORMTN_SCHEMA
+AUDSYS
+DIP
+ORDPLUGINS
+SYSKM
+ORDDATA
+
+
+
+USERNAME
+--------------------------------------------------------------------------------
+ORACLE_OCM
+SYSDG
+ORDSYS
+BPMSC
+BPMS
+CTRC
+CTR
+EP
+EPC
+HTMSC
+HTMS
+
+
+
+44 rows selected.
 """
     print(mainFromServer(sqlplus_input=sqlplus_input))
