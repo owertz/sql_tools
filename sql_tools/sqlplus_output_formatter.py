@@ -544,7 +544,13 @@ def extractor(content, n_field=None, debug=False, **kwargs):
             
             if add_separator:
                 # FIXME
-                _c = extractValueFromIndexes(line=_c, header=cropped_header_dict[k-len(cheader)], header_indexes=cropped_header_indexes[k-len(cheader)])
+                if len(cropped_header_dict)>1:
+                    var_header = cropped_header_dict[k-len(cheader)]
+                    var_header_indixes = cropped_header_indexes[k-len(cheader)]
+                else:
+                    var_header = cropped_header_dict[0]
+                    var_header_indixes = cropped_header_indexes[0]
+                _c = extractValueFromIndexes(line=_c, header=var_header, header_indexes=var_header_indixes)
                 _line = extractValueFromIndexes(line=content[k-1], header=cropped_header_dict[counter], header_indexes=cropped_header_indexes[counter])
             else:
                 if not content[k-1].rstrip().endswith(SEPARATOR):
@@ -1031,46 +1037,16 @@ if __name__ == '__main__':
     ##main(args=myargs)
 
 
-    sqlplus_input = """  DATFIN VALIDT_2 HEUFIN   SWIVAL_1 IDTPDT_1  REFIDT           TYPCTC      
--------- -------- -------- -------- --------- ---------------- ----------- 
-TYPTIE     TYPREL REFNAM           CATTIE IDTPDT_2   HEUMAJ   REFREL           
----------- ------ ---------------- ------ ---------- -------- ---------------- 
-DATDEB   IDTORG   VALIDT_3 PMGMAJ HEUDEB   SWIVAL_5
--------- -------- -------- ------ -------- --------
-20170120 9        13060053 01       H8ZN0JRMJ A7F19TZBTY3S0YID PHP4PVDQ6GG 
-0N2NZ5TH8Y B2HVF4 C2K07VHTYP3M1FWJ NQL0QQ ZCYJHFC30P 16124020 A4B08QHFEH1Z0YPR 
-20180920 1NC6HJXT 4168     TP229A 17573114 00       
-20190106 2        23571244 00       BSXE46PSJ C1A10KQRFL6A6VZW ZTC7FRB8SC2 
-54EYO90RYO K4LN29 C3E11LVCHA5P6BTH 6VZI4R K7GI72S4RN 10225556 C7B06JDMTH8O4TTV 
-20170707 KAAC1PGP 6445     TP009A 24142207 00       
-20190411 8        06295937 00       WT0XUU5TD B1G13ARYOE3P5SHO CLSGUFFQK9H 
-471BPZA9H4 1T9EXS B1G16NRRTT8U8PQE 6MQ4MH Q6LLZFXBVS 02534035 B8F23NXPZD2X2MPQ 
-20190205 JTYFHXVR 0980     TP237A 16010544 01       
-20220209 3        17562656 00       8F3B6UL72 B4D02VFAGV9X9SOI M1VQWNW6ZZU 
-5JZP9VDBFQ W0CFDQ C1I22OSUPB1B3PAF YKRSRF T0X48D3QZU 13025151 B9A20HOTCN8T9DYG 
-20221122 DT0C00D0 0557     TP701A 17382407 00       
-20180626 6        06161923 00       Q6MKX0H0K B7C17LUXEW0X2EQC HKOOTZ3652I 
-EB7XHW9XQ3 AEGBOZ C2H11ZEEPK1L6BDE 61XW35 V0HCYGIU6X 17153217 C4G24BVBSA2G6TEU 
-20220917 CJ2V4BS9 6339     TP102A 02124622 00       
-  DATFIN VALIDT_2 HEUFIN   SWIVAL_1 IDTPDT_1  REFIDT           TYPCTC      
--------- -------- -------- -------- --------- ---------------- ----------- 
-TYPTIE     TYPREL REFNAM           CATTIE IDTPDT_2   HEUMAJ   REFREL           
----------- ------ ---------------- ------ ---------- -------- ---------------- 
-DATDEB   IDTORG   VALIDT_3 PMGMAJ HEUDEB   SWIVAL_5
--------- -------- -------- ------ -------- --------
-20220110 5        17195905 00       4JGWIG3IL B1A07LDWHK5U8CTG 7C11WHUHEPO 
-QY0CW2KDGM 05TSBQ B2G14COUKO2Y0BNB L52P7P TPZUCEKCMC 23382041 B2G09WLYSE1P2GZS 
-20191003 EUK9FW3M 5036     TP703A 17580154 01       
-20210310 8        00214906 01       CZRJTKFSH A4B05XOLEL5P8JSQ UI5ZZH47M3K 
-A3W4QKGWTD 81TJPJ C8B23IGPEH5T2XTH UH8QXX VFPIQMLQXO 15253707 B4D20ABTHK4P3TTQ 
-20210608 WG7FFYWO 6078     TP295A 00544139 00       
-20210706 6        01322812 00       06BCYF3HE A3E12XHTYH9V3NES QCB7TREGH1A 
-1U1K3BNHGN N7SHPP B2L19FJFHD2K7JOC 4I8W9P T77NFS7LG7 00491450 A2H16WKGCD1R7KPC 
-20220408 ZK3A89KL 5506     TP558A 10013440 01       
-20191207 7        05525012 01       J2DSRQVIV C5I23RIEYQ7U3OSX 6N0TXECHDEM 
-RZ92ZCHA1R OM4O0Y C4F10BZHFA2B0ARO YE7JTM SL8Z3CPTCI 18502416 A3G23XSBVA0K7XRQ 
-20200617 EHKFEOTR 0400     TP547A 19131833 00       
-20170722 4        06434935 00       YJSK0GFSE B2K27USRFB1O1BWF T8CDBWIQ2UH 
-QEGMM2WSDP 1CSIGL A5E12EISXE7Q8YAW AIOHT7 HTSDGMAVVS 07394130 A1B01GIDUG3K0CPL 
-20190104 ESBRMTZY 1735     TP791A 15164240 01 """
+    sqlplus_input = """          REFNUM
+----------------
+B4B09PZWXA8M3VES 
+A3J03FQKOR7H9NIB 
+B3I02ZHRVZ9V6RED 
+A6K04UZJNV8L1OJD 
+C3L11EYGNJ8K2WIT 
+          REFNUM
+----------------
+C5D26TVCUS3P9EGE 
+B7D17MNTYH8P8DGY 
+"""
     print(mainFromServer(sqlplus_input=sqlplus_input))
