@@ -79,6 +79,7 @@ FIXME
 [ F ] NOT EXISTS does not work properly, e.g. "select * from pyd01 where not exists (...)
 [ F ] Incorrect alignment in the following query: "select * from pyd01 where datnai > (select SUBSTR(codtb1, 1, 4) - 18|| SUBSTR(codtb1, 5, 4) from zz002);" --> doesn't handle properly the '||' [OK], ' ||' [OK], ' || ' [OK], and '|| ' [OK]. Query for testing: "select a|| sum(b) from pyd01;"
 [ F ] Incorrect new line behavior for: "select x, datfin || heufin, y from tab;"
+[ 2 ] "select (a || sum(b)) from x;"
 """
 class BasicConfiguration(Enum):
     CONFIG_FILE_NAME = "config.ini"
