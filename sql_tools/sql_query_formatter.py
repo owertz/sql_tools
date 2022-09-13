@@ -65,8 +65,6 @@ FIXME
 [ F ] Cannot handle query that includes "OR" statement between "(" and ")". 
       For example: "where (numtie_1 in ('') or numtie_2 in (''))"
 [ F ] LISTAGG does not work.
-
-[ 1 ] Manage the query of type: SELECT ... FROM (SELECT ...)
 [ F ] GROUP BY does not work properly for all cases, e.g. "select refopn from xkd50 where senmsg='I' group by refopn order by duration desc;"
 [ F ] NOT LIKE does not work properly, e.g.: "select * from pyd01 where numtie not like 'P000%';"
 [ F ] Avoid capital SQL keywords when it is in table name, e.g. "select * from disctr_md_mandateoncontract;" 
@@ -79,7 +77,10 @@ FIXME
 [ F ] NOT EXISTS does not work properly, e.g. "select * from pyd01 where not exists (...)
 [ F ] Incorrect alignment in the following query: "select * from pyd01 where datnai > (select SUBSTR(codtb1, 1, 4) - 18|| SUBSTR(codtb1, 5, 4) from zz002);" --> doesn't handle properly the '||' [OK], ' ||' [OK], ' || ' [OK], and '|| ' [OK]. Query for testing: "select a|| sum(b) from pyd01;"
 [ F ] Incorrect new line behavior for: "select x, datfin || heufin, y from tab;"
+
+[ 1 ] Manage the query of type: SELECT ... FROM (SELECT ...)
 [ 2 ] "select (a || sum(b)) from x;"
+[ 3 ] "select x, count(*) where trim(staan) is null group by x;"
 """
 class BasicConfiguration(Enum):
     CONFIG_FILE_NAME = "config.ini"

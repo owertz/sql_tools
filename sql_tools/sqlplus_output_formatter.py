@@ -1,4 +1,5 @@
 import argparse
+from enum import Enum
 import logging
 from operator import ge
 import os
@@ -94,9 +95,16 @@ WORDING_N_RESULT_RETURN = {
     'de': 'Zeilen ausgewahlt',
     }
 
+class Constants(Enum):
+    """Define some constants"""
+    OUTPUT_ENDING = [
+        "rows selected", 
+        "row selected",
+    ]
+    NEW_LINE = "\n"
+
 # FUNCTIONS
 
-    
 def readFile(filename, root=None):
     """
     Read a file.
@@ -453,6 +461,10 @@ def extractValueFromIndexes(line, header, header_indexes):
     resulting_line = ''
     _starting_index = 0
     #_new_line = False
+
+    if any([line.count(value) for value in Constants.OUTPUT_ENDING.value]):
+        return line
+
     for m, _line_element in enumerate(line.split()):
         _index = header_indexes[m]
         ##_index = header_indexes[m] if header_indexes[m]>0 else 0
