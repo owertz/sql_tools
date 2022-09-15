@@ -80,7 +80,7 @@ FIXME
 
 [ 1 ] Manage the query of type: SELECT ... FROM (SELECT ...)
 [ 2 ] "select (a || sum(b)) from x;"
-[ 3 ] "select x, count(*) where trim(staan) is null group by x;"
+[ 3 ] "select x, count(*) from tab where trim(staan) is null group by x;"
 [ 4 ] "select * from tab where x='a-b';" --> the 'a-b' should remain unchanged. Currently, it becomes 'a - b'
 """
 class BasicConfiguration(Enum):
@@ -511,7 +511,11 @@ def insertNewLineAndSpaces(query: list, prespaces=Constants.EMPTY_SPACE.value, b
 
             elif element in keywords_back:
                 _is_r8after_back_subblock = True
-                result.append(f"{prespaces}{element} ")
+                if not checkIfPreviousEndswithNewlineTag(result):
+                    result.append(f"{Constants.NEW_LINE.value}{prespaces}{element} ")
+                else:
+                    result.append(f"{prespaces}{element} ")
+                #result.append(f"{prespaces}{element} ")
                 
             elif element in keywords_backandnewline+keywords_setseparator:
                 if element=="FROM":
@@ -1009,5 +1013,5 @@ def main(args=None):
 
 if __name__ == '__main__':
     myargs = None
-    myargs = MyParser(unitTestOnly=False, showSpaces=True)
+    myargs = MyParser(unitTestOnly=True, showSpaces=True)
     main(args=myargs)
