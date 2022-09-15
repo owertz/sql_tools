@@ -80,7 +80,7 @@ FIXME
 
 [ 1 ] Manage the query of type: SELECT ... FROM (SELECT ...)
 [ 2 ] "select (a || sum(b)) from x;"
-[ 3 ] "select x, count(*) from tab where trim(staan) is null group by x;"
+[ F ] "select x, count(*) from tab where trim(staan) is null group by x;"
 [ 4 ] "select * from tab where x='a-b';" --> the 'a-b' should remain unchanged. Currently, it becomes 'a - b'
 """
 class BasicConfiguration(Enum):
