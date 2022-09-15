@@ -435,6 +435,7 @@ def insertNewLineAndSpaces(query: list, prespaces=Constants.EMPTY_SPACE.value, b
             break
         elif element == "(" and not _pass and result[k-1].strip() in keywords_newblock:
             _block_status += 1
+            result.append(f"{spaces}{element}")
         elif element == ")" and block>0:
             if _within_subblock:
                 _within_subblock -= 1
@@ -776,6 +777,9 @@ def insertNewLineAndSpaces(query: list, prespaces=Constants.EMPTY_SPACE.value, b
             
             # elif not _after_from and not result[k-1].endswith(Constants.SEPARATOR_COMMA.value):
             #     result.append(f"{Constants.MONO_SPACE.value}{element}")
+
+            elif not _after_from and n_block>0 and result[k-1].rstrip().endswith(Constants.PARENTHESIS_OPEN.value):
+                result.append(f"{element} ")
 
             else:
                 result.append(f"{spaces}{element}{Constants.NEW_LINE.value}")
