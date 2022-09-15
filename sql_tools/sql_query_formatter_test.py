@@ -29,7 +29,7 @@ FIXME
 """
 queries_for_unittest = [
     "myQuery1a", "myQuery1b", "myQuery1c", "myQuery1d", "myQuery1e", "myQuery1f", "myQuery1g", "myQuery1h", "myQuery1i", "myQuery1j", 
-    "myQuery1k1", "myQuery1k2", "myQuery1k3", "myQuery1k4",
+    "myQuery1k1", "myQuery1k2", "myQuery1k3", "myQuery1k4", "myQuery1m",
     "myQuery2", "myQuery2b", "myQuery2c",
     "myQuery3", "myQuery3b",
     "myQuery4a", "myQuery4b", "myQuery4c",
@@ -96,6 +96,20 @@ myQuery1k3_expected_surrogate = myQuery1k3_expected.replace(Constants.MONO_SPACE
 myQuery1k4 = """select a || sum(b) from pyd01;"""
 myQuery1k4_expected = f"SELECT{Constants.NEW_LINE.value}{Constants.FOUR_SPACES.value}a{Constants.MONO_SPACE.value}||{Constants.MONO_SPACE.value}SUM(b){Constants.NEW_LINE.value}FROM{Constants.NEW_LINE.value}{Constants.FOUR_SPACES.value}pyd01{Constants.NEW_LINE.value};"
 myQuery1k4_expected_surrogate = myQuery1k4_expected.replace(Constants.MONO_SPACE.value, Constants.SURROGATE.value)
+
+myQuery1m = """select (a || sum(b)) from x;"""
+myQuery1m_expected = f"SELECT{Constants.NEW_LINE.value}{Constants.FOUR_SPACES.value}(a{Constants.MONO_SPACE.value}||{Constants.MONO_SPACE.value}SUM(b)){Constants.NEW_LINE.value}FROM{Constants.NEW_LINE.value}{Constants.FOUR_SPACES.value}x{Constants.NEW_LINE.value};"
+myQuery1m_expected_surrogate = myQuery1m_expected.replace(Constants.MONO_SPACE.value, Constants.SURROGATE.value)
+""" 
+{Constants.NEW_LINE.value}
+{Constants.NEW_LINE.value}{Constants.FOUR_SPACES.value}
+{Constants.NEW_LINE.value}{Constants.EIGHT_SPACES.value}
+{Constants.NEW_LINE.value}{Constants.TWELVE_SPACES.value}
+{Constants.FOUR_SPACES.value}
+{Constants.MONO_SPACE.value}
+"""
+
+
 
 myQuery2 = """select    perm.APP_FK_COD , perm.RESOURCE_TYPE_FK_COD,   perm.PROFILE_FK_COD from EROLE_PERMISSION perm where 
 perm.PROFILE_FK_COD = prof.PROFILE_COD

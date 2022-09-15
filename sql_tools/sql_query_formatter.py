@@ -79,7 +79,7 @@ FIXME
 [ F ] Incorrect new line behavior for: "select x, datfin || heufin, y from tab;"
 
 [ 1 ] Manage the query of type: SELECT ... FROM (SELECT ...)
-[ 2 ] "select (a || sum(b)) from x;"
+[ F ] "select (a || sum(b)) from x;"
 [ F ] "select x, count(*) from tab where trim(staan) is null group by x;"
 [ 4 ] "select * from tab where x='a-b';" --> the 'a-b' should remain unchanged. Currently, it becomes 'a - b'
 """
@@ -1017,5 +1017,5 @@ def main(args=None):
 
 if __name__ == '__main__':
     myargs = None
-    myargs = MyParser(unitTestOnly=True, showSpaces=True)
+    myargs = MyParser(unitTestOnly=False, showSpaces=True)
     main(args=myargs)
