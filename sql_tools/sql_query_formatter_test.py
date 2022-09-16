@@ -33,7 +33,7 @@ queries_for_unittest = [
     "myQuery2", "myQuery2b", "myQuery2c",
     "myQuery3", "myQuery3b",
     "myQuery4a", "myQuery4b", "myQuery4c",
-    "myQuery5a", "myQuery5b", "myQuery5c", "myQuery5d", "myQuery5e", "myQuery5f", "myQuery5g", "myQuery5h",
+    "myQuery5a", "myQuery5b", "myQuery5c", "myQuery5d", "myQuery5e", "myQuery5f", "myQuery5g", "myQuery5h", "myQuery5i",
     "myQuery6a", "myQuery6b",
     "myQuery7a", "myQuery7b", "myQuery7c",
 ]
@@ -226,11 +226,11 @@ myQuery5e = """
 SELECT DISTINCT X.ID, 
 LISTAGG (DECODE(a)) WITHIN GROUP (ORDER BY X.ID, Y.oid, cl_bk.columnordernumber) OVER (PARTITION BY X.oid, Y.oid) "OCCUR_BK",
 COUNT(x)
-FROM X 
-JOIN Y ON Y.TABLE_OID = X.OID
-LEFT JOIN Z ON X.OID = i.table_oid
-LEFT OUTER JOIN Z ON X.OID = i.table_oid
-LEFT INNER JOIN Z ON X.OID = i.table_oid and x.w = zk.table_id
+FROM X join        
+   Y ON Y.TABLE_OID = X.OID
+LEFT    JOIN   Z ON X.OID = i.table_oid   LEFT  OUTER    
+JOIN Z ON X.OID = i.table_oid LEFT 
+INNER   JOIN  Z ON X.OID = i.table_oid and x.w = zk.table_id
 WHERE X.ID in ('DAILY_BANKING_CHANNEL')
 ORDER BY X.id, Y.oid
 ;
@@ -249,6 +249,26 @@ myQuery5g_expected_surrogate = myQuery5g_expected.replace(Constants.MONO_SPACE.v
 myQuery5h = """select p01.numtie from pyd01_de p01 join pyd05_de p05 on (p05.numtie_1 = p01.numtie or p05.numtie_2 = p01.numtie);"""
 myQuery5h_expected = f"SELECT{Constants.NEW_LINE.value}{Constants.FOUR_SPACES.value}p01.numtie{Constants.NEW_LINE.value}FROM{Constants.NEW_LINE.value}{Constants.FOUR_SPACES.value}pyd01_de{Constants.MONO_SPACE.value}p01{Constants.NEW_LINE.value}JOIN{Constants.MONO_SPACE.value}pyd05_de{Constants.MONO_SPACE.value}p05{Constants.MONO_SPACE.value}ON{Constants.MONO_SPACE.value}(p05.numtie_1{Constants.MONO_SPACE.value}={Constants.MONO_SPACE.value}p01.numtie{Constants.MONO_SPACE.value}OR{Constants.MONO_SPACE.value}p05.numtie_2{Constants.MONO_SPACE.value}={Constants.MONO_SPACE.value}p01.numtie){Constants.NEW_LINE.value};"
 myQuery5h_expected_surrogate = myQuery5h_expected.replace(Constants.MONO_SPACE.value, Constants.SURROGATE.value)
+
+myQuery5i = """select x   from    cbd10  
+left    
+join  a on b=c  
+left   outer  
+JOIN   a on b=c  
+left    
+inner  JOIN  a on b=c  
+right  join   
+a on b=c  
+right  
+outer   join  a on b=c  
+right  inner   
+join  a on b=c  
+inner  
+join   a on b=c  
+join   a on b=c  
+;"""
+myQuery5i_expected = f"SELECT{Constants.NEW_LINE.value}{Constants.FOUR_SPACES.value}x{Constants.NEW_LINE.value}FROM{Constants.NEW_LINE.value}{Constants.FOUR_SPACES.value}cbd10{Constants.NEW_LINE.value}LEFT{Constants.MONO_SPACE.value}JOIN{Constants.MONO_SPACE.value}a{Constants.MONO_SPACE.value}ON{Constants.MONO_SPACE.value}b{Constants.MONO_SPACE.value}={Constants.MONO_SPACE.value}c{Constants.NEW_LINE.value}LEFT{Constants.MONO_SPACE.value}OUTER{Constants.MONO_SPACE.value}JOIN{Constants.MONO_SPACE.value}a{Constants.MONO_SPACE.value}ON{Constants.MONO_SPACE.value}b{Constants.MONO_SPACE.value}={Constants.MONO_SPACE.value}c{Constants.NEW_LINE.value}LEFT{Constants.MONO_SPACE.value}INNER{Constants.MONO_SPACE.value}JOIN{Constants.MONO_SPACE.value}a{Constants.MONO_SPACE.value}ON{Constants.MONO_SPACE.value}b{Constants.MONO_SPACE.value}={Constants.MONO_SPACE.value}c{Constants.NEW_LINE.value}RIGHT{Constants.MONO_SPACE.value}JOIN{Constants.MONO_SPACE.value}a{Constants.MONO_SPACE.value}ON{Constants.MONO_SPACE.value}b{Constants.MONO_SPACE.value}={Constants.MONO_SPACE.value}c{Constants.NEW_LINE.value}RIGHT{Constants.MONO_SPACE.value}OUTER{Constants.MONO_SPACE.value}JOIN{Constants.MONO_SPACE.value}a{Constants.MONO_SPACE.value}ON{Constants.MONO_SPACE.value}b{Constants.MONO_SPACE.value}={Constants.MONO_SPACE.value}c{Constants.NEW_LINE.value}RIGHT{Constants.MONO_SPACE.value}INNER{Constants.MONO_SPACE.value}JOIN{Constants.MONO_SPACE.value}a{Constants.MONO_SPACE.value}ON{Constants.MONO_SPACE.value}b{Constants.MONO_SPACE.value}={Constants.MONO_SPACE.value}c{Constants.NEW_LINE.value}INNER{Constants.MONO_SPACE.value}JOIN{Constants.MONO_SPACE.value}a{Constants.MONO_SPACE.value}ON{Constants.MONO_SPACE.value}b{Constants.MONO_SPACE.value}={Constants.MONO_SPACE.value}c{Constants.NEW_LINE.value}JOIN{Constants.MONO_SPACE.value}a{Constants.MONO_SPACE.value}ON{Constants.MONO_SPACE.value}b{Constants.MONO_SPACE.value}={Constants.MONO_SPACE.value}c{Constants.NEW_LINE.value};"
+myQuery5i_expected_surrogate = myQuery5i_expected.replace(Constants.MONO_SPACE.value, Constants.SURROGATE.value)
 
 myQuery6a = """select op_cod, structure_element_fk_cod, status, opt_fk_cod, version, update_date, update_user_id from eorg_op where op_cod in (
 select op_cod from eorg_op 
