@@ -24,6 +24,25 @@
 <p>The <strong>SQL Query Formatter</strong> tool will help you to write readable and maintainable query by applying the best practices.</p>
 <!--p>Write your SQL query(ies) here and press submit.<br/></p-->
 
+<!-- FIXME: to add in a right-side column
+<p>For instance, avoid:</p>
+<pre class="pre-scrollable">select name, surname, substr(date, 1, 4) "Year" from employees where id>100 order by name asc, surname desc;</pre>
+<p>but prefer:</p>
+<pre class="pre-scrollable">SELECT
+    name,
+    surname,
+    SUBSTR(date, 1, 4) "Year"
+FROM
+    employees
+WHERE
+    id > 100
+ORDER BY
+    name asc,
+    surname DESC
+;
+</pre>
+-->
+
 <form method="post">
     <div class="form-group">
         <label for="content">Your query(ies)</label>
