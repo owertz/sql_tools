@@ -4,7 +4,7 @@ import re
 
 from enum import Enum
 
-__version__ = '0.0.1'
+__version__ = '0.0.b4'
 __author__ = 'OWE'
 
 """

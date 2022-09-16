@@ -16,7 +16,7 @@ from tools import removeNewlineTagOnLastEntry, checkIfSubstringSurroundingIsSpac
 from tools import replaceSpecificOccurencesOfSubstringInString, isFunction
 
 
-__version__ = '0.0.b1'
+__version__ = '0.0.b4'
 __author__ = 'OWE'
     
 """
@@ -37,6 +37,7 @@ Content
 [ F ] Allow the inputFile to include several SQL queries, and the formatter() to deal with it.
 [ F ] Manage the comment inline (-- text ... \n) and section (/* text ... */)
 [ F ] Allow the input file to start with a comment
+[ 1 ] Add a button "Report a bug" in the HTML page
       
 FIXME
 -----
