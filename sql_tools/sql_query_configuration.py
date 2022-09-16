@@ -68,6 +68,7 @@ class SQLKeywords(Enum):
         "JOIN",
         "LEFT",
         "OUTER",
+        "INNER",
         "WHERE",
         " ON ",
         "AND",
