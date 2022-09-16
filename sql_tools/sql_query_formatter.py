@@ -805,7 +805,6 @@ def addSpacesBetweenSeparator(query: str) -> str:
     if Constants.HOOK_QUERY_CLOSURE.value in query:
         query = removeHook(query, hook_type="QUERY_CLOSURE")
     
-
     for sep in separators:
         query = re.sub(f" *{sep} *", f" {sep} ", query)
 

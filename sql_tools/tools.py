@@ -292,9 +292,23 @@ def forwardCheckIfInORBlock(string: str):
             continue
     return False
 
+def testcase_re_sub_with_function():
+    """Test Case for re.sub() with a function"""
+    query = "select * from tab where tablename='a-b';"
+    sep = "-"
+
+    def foo(matchobj):
+        print(matchobj.group())
+        return f" {sep} "
+
+    result = re.sub(f" *{sep} *", foo, query)
+    return result
+
 
 def main():
-    print(generateAllCaseVersionOfAString('count '))
+    #print(generateAllCaseVersionOfAString('count '))
+    result = testcase_re_sub_with_function()
+    print(result)
 
 if __name__ == '__main__':
     main()
