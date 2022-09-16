@@ -65,8 +65,6 @@ FIXME
 [ F ] Cannot handle query that includes "OR" statement between "(" and ")". 
       For example: "where (numtie_1 in ('') or numtie_2 in (''))"
 [ F ] LISTAGG does not work.
-
-[ 1 ] Manage the query of type: SELECT ... FROM (SELECT ...)
 [ F ] GROUP BY does not work properly for all cases, e.g. "select refopn from xkd50 where senmsg='I' group by refopn order by duration desc;"
 [ F ] NOT LIKE does not work properly, e.g.: "select * from pyd01 where numtie not like 'P000%';"
 [ F ] Avoid capital SQL keywords when it is in table name, e.g. "select * from disctr_md_mandateoncontract;" 
@@ -79,7 +77,11 @@ FIXME
 [ F ] NOT EXISTS does not work properly, e.g. "select * from pyd01 where not exists (...)
 [ F ] Incorrect alignment in the following query: "select * from pyd01 where datnai > (select SUBSTR(codtb1, 1, 4) - 18|| SUBSTR(codtb1, 5, 4) from zz002);" --> doesn't handle properly the '||' [OK], ' ||' [OK], ' || ' [OK], and '|| ' [OK]. Query for testing: "select a|| sum(b) from pyd01;"
 [ F ] Incorrect new line behavior for: "select x, datfin || heufin, y from tab;"
-[ 2 ] "select (a || sum(b)) from x;"
+
+[ 1 ] Manage the query of type: SELECT ... FROM (SELECT ...)
+[ F ] "select (a || sum(b)) from x;"
+[ F ] "select x, count(*) from tab where trim(staan) is null group by x;"
+[ 4 ] "select * from tab where x='a-b';" --> the 'a-b' should remain unchanged. Currently, it becomes 'a - b'
 """
 class BasicConfiguration(Enum):
     CONFIG_FILE_NAME = "config.ini"
@@ -322,7 +324,7 @@ def insertNewLineAndSpaces(query: list, prespaces=Constants.EMPTY_SPACE.value, b
         "NOTEXISTS": ("(\n", "still",)
         #"PARTITION": ("BY", "back"),
     }
-    keywords_function = ["REPLACE", "SUBSTR", "LISTAGG", "COUNT", "DECODE", "DATEDIFF", "SUM", "AVG"]
+    keywords_function = ["REPLACE", "SUBSTR", "LISTAGG", "COUNT", "DECODE", "DATEDIFF", "SUM", "AVG", "TRIM"]
     keywords_all = (
         keywords_newblock +
         keywords_back + 
@@ -433,6 +435,7 @@ def insertNewLineAndSpaces(query: list, prespaces=Constants.EMPTY_SPACE.value, b
             break
         elif element == "(" and not _pass and result[k-1].strip() in keywords_newblock:
             _block_status += 1
+            result.append(f"{spaces}{element}")
         elif element == ")" and block>0:
             if _within_subblock:
                 _within_subblock -= 1
@@ -509,7 +512,11 @@ def insertNewLineAndSpaces(query: list, prespaces=Constants.EMPTY_SPACE.value, b
 
             elif element in keywords_back:
                 _is_r8after_back_subblock = True
-                result.append(f"{prespaces}{element} ")
+                if not checkIfPreviousEndswithNewlineTag(result):
+                    result.append(f"{Constants.NEW_LINE.value}{prespaces}{element} ")
+                else:
+                    result.append(f"{prespaces}{element} ")
+                #result.append(f"{prespaces}{element} ")
                 
             elif element in keywords_backandnewline+keywords_setseparator:
                 if element=="FROM":
@@ -771,6 +778,9 @@ def insertNewLineAndSpaces(query: list, prespaces=Constants.EMPTY_SPACE.value, b
             # elif not _after_from and not result[k-1].endswith(Constants.SEPARATOR_COMMA.value):
             #     result.append(f"{Constants.MONO_SPACE.value}{element}")
 
+            elif not _after_from and n_block>0 and result[k-1].rstrip().endswith(Constants.PARENTHESIS_OPEN.value):
+                result.append(f"{element} ")
+
             else:
                 result.append(f"{spaces}{element}{Constants.NEW_LINE.value}")
 
@@ -795,7 +805,6 @@ def addSpacesBetweenSeparator(query: str) -> str:
     if Constants.HOOK_QUERY_CLOSURE.value in query:
         query = removeHook(query, hook_type="QUERY_CLOSURE")
     
-
     for sep in separators:
         query = re.sub(f" *{sep} *", f" {sep} ", query)
 

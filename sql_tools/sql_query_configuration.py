@@ -104,6 +104,7 @@ class SQLKeywords(Enum):
         "ISNULL",
         "CASE",
         "WHEN",
+        "TRIM",
     ]
 
 class SQLMultiKeywords(Enum):

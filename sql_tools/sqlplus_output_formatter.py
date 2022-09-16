@@ -1,4 +1,5 @@
 import argparse
+from enum import Enum
 import logging
 from operator import ge
 import os
@@ -47,8 +48,12 @@ Content
       
 FIXME
 -----
-Not yet.
+[ F ] Bug when the header lies on one line.
+[ 2 ] Manage the "x rows selected." at the end of the output
+[ 3 ] Some data are replaced by Null while correctly passed as an input
 """
+
+
 # SQL CONFIGURATION
 SQL_TEMP_FILENAME = '_temp.sql' 
 SELECT = 'select'
@@ -91,9 +96,16 @@ WORDING_N_RESULT_RETURN = {
     'de': 'Zeilen ausgewahlt',
     }
 
+class Constants(Enum):
+    """Define some constants"""
+    OUTPUT_ENDING = [
+        "rows selected", 
+        "row selected",
+    ]
+    NEW_LINE = "\n"
+
 # FUNCTIONS
 
-    
 def readFile(filename, root=None):
     """
     Read a file.
@@ -450,6 +462,10 @@ def extractValueFromIndexes(line, header, header_indexes):
     resulting_line = ''
     _starting_index = 0
     #_new_line = False
+
+    if any([line.count(value) for value in Constants.OUTPUT_ENDING.value]):
+        return line
+
     for m, _line_element in enumerate(line.split()):
         _index = header_indexes[m]
         ##_index = header_indexes[m] if header_indexes[m]>0 else 0
@@ -1037,16 +1053,61 @@ if __name__ == '__main__':
     ##main(args=myargs)
 
 
-    sqlplus_input = """          REFNUM
-----------------
-B4B09PZWXA8M3VES 
-A3J03FQKOR7H9NIB 
-B3I02ZHRVZ9V6RED 
-A6K04UZJNV8L1OJD 
-C3L11EYGNJ8K2WIT 
-          REFNUM
-----------------
-C5D26TVCUS3P9EGE 
-B7D17MNTYH8P8DGY 
+    sqlplus_input = """          REFREL USRMAJ      HEUDEB   STAANN DATCRT   SWIVAL_5 REGMAT      
+---------------- ----------- -------- ------ -------- -------- ----------- 
+VALIDT_2 VALIDT_1 REFNUM           SWIVAL_4 CODTIT     
+-------- -------- ---------------- -------- -----------
+A9I17UZNWQ4P2UJG YGMYMW2S7JU 05353811        20220108 00       FG4GJXB0LZJ 
+01       899      A9J26IHNEQ9J7QXG 01       OOPJ75S4O8U 
+A6A26GRYHS6X2ZZU STYIS91DAZ3 10571126 U      20180811 00       TQJUPC8V7YF 
+53       874      C9D21BRBVV7T6SUY 01       7ONYFAXRTU4 
+C4H13WESKV3X7TTW O9R8UQF5XV2 06202255        20170819 00       G7RAU0DTBHH 
+95       791      B7L08DWJCT2I2JZU 01       A14GK9QJ52K 
+A2G17VZIPR7D1JTI 7N9J0RIHG0X 02153949 U      20200326 00       KIZQYK93ERA 
+18       255      C8J14ISIGE4I3KAC 00       SNQ4R5LOSDZ 
+B6B02ICJZU3A5EQE PCDXN6MXZXK 08535733        20200911 01       FMW4D24YQO2 
+41       756      B7K15MLOVK4Z7BYJ 01       WDRRBL3FJ99 
+          REFREL USRMAJ      HEUDEB   STAANN DATCRT   SWIVAL_5 REGMAT      
+---------------- ----------- -------- ------ -------- -------- ----------- 
+VALIDT_2 VALIDT_1 REFNUM           SWIVAL_4 CODTIT     
+-------- -------- ---------------- -------- -----------
+A1C05ZFWJP4X5NIA 0ZY4FWDQMT6 02552255 U      20210125 01       F6K52X3I4NR 
+09       420      B5H14HIOOL5Y6JAT 00       1UZKQOQB404 
+B2G12JKCAS0P2AWN TDCJVAWK1YE 04344758        20200120 01       JS8LZWGYVRQ 
+63       886      C8C02CUIID2E9NFN 00       QJY1RSMRD3T 
+B4C16KPSGA9M8KFU BQ4G5SDWH07 24044009        20171226 01       78YGM48O3Q2 
+85       838      B0A22UQMNM2F6HVK 01       2QEGF1CP156 
+A5E21NRTLP5H0MJP BC5B8AYN28U 24003844        20181004 01       ZNIDRNUUUP3 
+11       578      C8C25TMHQD8W1TWI 01       69O445F5KIQ 
+A6E24FXYZP3K7AFJ ZQJ5SDVE7HU 09572628        20171011 00       XITWYJV1MK0 
+00       207      C2H18STHIR6R0PBK 00       EM7MBX3G1YC 
+          REFREL USRMAJ      HEUDEB   STAANN DATCRT   SWIVAL_5 REGMAT      
+---------------- ----------- -------- ------ -------- -------- ----------- 
+VALIDT_2 VALIDT_1 REFNUM           SWIVAL_4 CODTIT     
+-------- -------- ---------------- -------- -----------
+A8E12HFWEE3R1FAH 91M8HM0643X 22155100 U      20170326 01       DS86UXXGH45 
+43       174      A2K13NCSNH5A5MQX 00       H55DXICIPJS 
+B3J09FNDDB3L0LIX VIU7ARIKVL2 06561245        20170515 01       KWHL3EZ8NE3 
+97       231      B6D25DFKCA8A7DGY 00       L8AGQOJ5616 
+A8H16OQWFP5C6LAF JRIY565VZX4 00544842        20181207 01       L50K7DB1VPU 
+41       183      C4J04JGRRZ4B5SAM 01       T5P0XTL8GX9 
+B6E13ZZWYP2X8GSH 7AM16E42LOS 07282233 U      20190103 00       PM5Y2F8GP7A 
+45       795      B8E08BXUHR2F3SYX 00       048EMWIE3YB 
+A4B27YTXPK1G3KRA 9K5E1U74PRJ 09134138        20220516 01       CNYK3SVX87G 
+40       678      C2I27JHIEU9D7MXG 01       NOG1GDC05F2 
+          REFREL USRMAJ      HEUDEB   STAANN DATCRT   SWIVAL_5 REGMAT      
+---------------- ----------- -------- ------ -------- -------- ----------- 
+VALIDT_2 VALIDT_1 REFNUM           SWIVAL_4 CODTIT     
+-------- -------- ---------------- -------- -----------
+A9D10BURQT6J7OKN FN6CLBVXSAE 06333516        20200324 00       DACX2OQB9UV 
+81       231      B5D28WMGWZ7P7YKR 01       ZL7DEP0ZC3D 
+A2A10AMLDW2N6EWB WLZ93FM0MUZ 01151609 U      20170404 01       2Q60A1GFWZB 
+74       830      C0A15MJRMN4I9FYO 00       TD5CYCK2DT4 
+C3I19LGUUE0U1OZL FAA6M0BHBEM 08454845        20170128 00       0605FMXU44G 
+20       457      B8F28UEGDH4N3WVE 01       LXJTK3W1KOY 
+A2G09IFXCX5R6YQQ W0JAK17B8ZN 20502318        20210105 00       L1Q2THG25Y7 
+10       711      C1C03VXWQS7H5DMU 01       Q6SKT8ZYFVU 
+B5H06ONOXJ3D7FRD HTJS49AMSL0 06164257        20210608 00       HZMYGQEKNST 
+67       476      A6D19TWZAR5D9YVY 00       YTUWOVO6HOF 
 """
     print(mainFromServer(sqlplus_input=sqlplus_input))

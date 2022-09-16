@@ -29,13 +29,13 @@ FIXME
 """
 queries_for_unittest = [
     "myQuery1a", "myQuery1b", "myQuery1c", "myQuery1d", "myQuery1e", "myQuery1f", "myQuery1g", "myQuery1h", "myQuery1i", "myQuery1j", 
-    "myQuery1k1", "myQuery1k2", "myQuery1k3", "myQuery1k4",
+    "myQuery1k1", "myQuery1k2", "myQuery1k3", "myQuery1k4", "myQuery1m",
     "myQuery2", "myQuery2b", "myQuery2c",
     "myQuery3", "myQuery3b",
     "myQuery4a", "myQuery4b", "myQuery4c",
     "myQuery5a", "myQuery5b", "myQuery5c", "myQuery5d", "myQuery5e", "myQuery5f", "myQuery5g", "myQuery5h",
     "myQuery6a", "myQuery6b",
-    "myQuery7a", "myQuery7b",
+    "myQuery7a", "myQuery7b", "myQuery7c",
 ]
 
 myQuery1a = "select   *  frOm user_tables   ;"
@@ -97,6 +97,20 @@ myQuery1k4 = """select a || sum(b) from pyd01;"""
 myQuery1k4_expected = f"SELECT{Constants.NEW_LINE.value}{Constants.FOUR_SPACES.value}a{Constants.MONO_SPACE.value}||{Constants.MONO_SPACE.value}SUM(b){Constants.NEW_LINE.value}FROM{Constants.NEW_LINE.value}{Constants.FOUR_SPACES.value}pyd01{Constants.NEW_LINE.value};"
 myQuery1k4_expected_surrogate = myQuery1k4_expected.replace(Constants.MONO_SPACE.value, Constants.SURROGATE.value)
 
+myQuery1m = """select (a || sum(b)) from x;"""
+myQuery1m_expected = f"SELECT{Constants.NEW_LINE.value}{Constants.FOUR_SPACES.value}(a{Constants.MONO_SPACE.value}||{Constants.MONO_SPACE.value}SUM(b)){Constants.NEW_LINE.value}FROM{Constants.NEW_LINE.value}{Constants.FOUR_SPACES.value}x{Constants.NEW_LINE.value};"
+myQuery1m_expected_surrogate = myQuery1m_expected.replace(Constants.MONO_SPACE.value, Constants.SURROGATE.value)
+""" 
+{Constants.NEW_LINE.value}
+{Constants.NEW_LINE.value}{Constants.FOUR_SPACES.value}
+{Constants.NEW_LINE.value}{Constants.EIGHT_SPACES.value}
+{Constants.NEW_LINE.value}{Constants.TWELVE_SPACES.value}
+{Constants.FOUR_SPACES.value}
+{Constants.MONO_SPACE.value}
+"""
+
+
+
 myQuery2 = """select    perm.APP_FK_COD , perm.RESOURCE_TYPE_FK_COD,   perm.PROFILE_FK_COD from EROLE_PERMISSION perm where 
 perm.PROFILE_FK_COD = prof.PROFILE_COD
 and grouplk.PROFILE_FK_COD =prof.PROFILE_COD and profgrp.PROFILEGROUP_COD= grouplk.PROFILE_GROUP_FK_COD
@@ -109,7 +123,7 @@ myQuery2b_expected = f"SELECT{Constants.NEW_LINE.value}{Constants.FOUR_SPACES.va
 myQuery2b_expected_surrogate = myQuery2b_expected.replace(Constants.MONO_SPACE.value, Constants.SURROGATE.value)
 
 myQuery2c = """select * from pyd05_de where trim(staan) is null and (numtie_1 in ('P0001R6E') or numtie_2 in ('P0001R6E')) order by heumaj;"""
-myQuery2c_expected = f"SELECT{Constants.NEW_LINE.value}{Constants.FOUR_SPACES.value}*{Constants.NEW_LINE.value}FROM{Constants.NEW_LINE.value}{Constants.FOUR_SPACES.value}pyd05_de{Constants.NEW_LINE.value}WHERE{Constants.NEW_LINE.value}{Constants.FOUR_SPACES.value}trim(staan){Constants.MONO_SPACE.value}IS{Constants.MONO_SPACE.value}NULL{Constants.NEW_LINE.value}{Constants.FOUR_SPACES.value}AND{Constants.MONO_SPACE.value}(numtie_1{Constants.MONO_SPACE.value}IN{Constants.MONO_SPACE.value}('P0001R6E'){Constants.MONO_SPACE.value}OR{Constants.MONO_SPACE.value}numtie_2{Constants.MONO_SPACE.value}IN{Constants.MONO_SPACE.value}('P0001R6E')){Constants.NEW_LINE.value}ORDER⎵BY{Constants.NEW_LINE.value}{Constants.FOUR_SPACES.value}heumaj{Constants.NEW_LINE.value};"
+myQuery2c_expected = f"SELECT{Constants.NEW_LINE.value}{Constants.FOUR_SPACES.value}*{Constants.NEW_LINE.value}FROM{Constants.NEW_LINE.value}{Constants.FOUR_SPACES.value}pyd05_de{Constants.NEW_LINE.value}WHERE{Constants.NEW_LINE.value}{Constants.FOUR_SPACES.value}TRIM(staan){Constants.MONO_SPACE.value}IS{Constants.MONO_SPACE.value}NULL{Constants.NEW_LINE.value}{Constants.FOUR_SPACES.value}AND{Constants.MONO_SPACE.value}(numtie_1{Constants.MONO_SPACE.value}IN{Constants.MONO_SPACE.value}('P0001R6E'){Constants.MONO_SPACE.value}OR{Constants.MONO_SPACE.value}numtie_2{Constants.MONO_SPACE.value}IN{Constants.MONO_SPACE.value}('P0001R6E')){Constants.NEW_LINE.value}ORDER⎵BY{Constants.NEW_LINE.value}{Constants.FOUR_SPACES.value}heumaj{Constants.NEW_LINE.value};"
 myQuery2c_expected_surrogate = myQuery2c_expected.replace(Constants.MONO_SPACE.value, Constants.SURROGATE.value)
 
 myQuery3 = """select test from DMD01 d01 where exists (  select null from zz051 z51 where z51.x =d01.y and z51.TEST='COMPLETED') order by test desc;"""
@@ -258,6 +272,10 @@ myQuery7a_expected_surrogate = myQuery7a_expected.replace(Constants.MONO_SPACE.v
 myQuery7b = """select a, b, c from x where a='I' group by a having count(*)> 1, b having count(*) >2 order by c desc;"""
 myQuery7b_expected = f"SELECT{Constants.NEW_LINE.value}{Constants.FOUR_SPACES.value}a,{Constants.NEW_LINE.value}{Constants.FOUR_SPACES.value}b,{Constants.NEW_LINE.value}{Constants.FOUR_SPACES.value}c{Constants.NEW_LINE.value}FROM{Constants.NEW_LINE.value}{Constants.FOUR_SPACES.value}x{Constants.NEW_LINE.value}WHERE{Constants.NEW_LINE.value}{Constants.FOUR_SPACES.value}a{Constants.MONO_SPACE.value}={Constants.MONO_SPACE.value}'I'{Constants.NEW_LINE.value}GROUP{Constants.MONO_SPACE.value}BY{Constants.NEW_LINE.value}{Constants.FOUR_SPACES.value}a{Constants.MONO_SPACE.value}HAVING{Constants.MONO_SPACE.value}COUNT(*){Constants.MONO_SPACE.value}>{Constants.MONO_SPACE.value}1,{Constants.NEW_LINE.value}{Constants.FOUR_SPACES.value}b{Constants.MONO_SPACE.value}HAVING COUNT(*){Constants.MONO_SPACE.value}>{Constants.MONO_SPACE.value}2{Constants.NEW_LINE.value}ORDER{Constants.MONO_SPACE.value}BY{Constants.NEW_LINE.value}{Constants.FOUR_SPACES.value}c{Constants.MONO_SPACE.value}DESC{Constants.NEW_LINE.value};"
 myQuery7b_expected_surrogate = myQuery7b_expected.replace(Constants.MONO_SPACE.value, Constants.SURROGATE.value)
+
+myQuery7c = """select x, count(*) from tab where trim(staan) is null group by x;"""
+myQuery7c_expected = f"SELECT{Constants.NEW_LINE.value}{Constants.FOUR_SPACES.value}x,{Constants.NEW_LINE.value}{Constants.FOUR_SPACES.value}COUNT(*){Constants.NEW_LINE.value}FROM{Constants.NEW_LINE.value}{Constants.FOUR_SPACES.value}tab{Constants.NEW_LINE.value}WHERE{Constants.NEW_LINE.value}{Constants.FOUR_SPACES.value}TRIM(staan){Constants.MONO_SPACE.value}IS{Constants.MONO_SPACE.value}NULL{Constants.NEW_LINE.value}GROUP{Constants.MONO_SPACE.value}BY{Constants.NEW_LINE.value}{Constants.FOUR_SPACES.value}x{Constants.NEW_LINE.value};"
+myQuery7c_expected_surrogate = myQuery7c_expected.replace(Constants.MONO_SPACE.value, Constants.SURROGATE.value)
 
 
 myQuery_test = """select op_cod, structure_element_fk_cod, status, opt_fk_cod, version, update_date, update_user_id from eorg_op where op_cod in (
