@@ -7,7 +7,7 @@ import re
 from enum import Enum
 #from tkinter import SEPARATOR
 
-from sql_query_configuration import Constants, SQLKeywords, SQLMultiKeywords
+from sql_query_configuration import Constants, SQLKeywords, SQLMultiKeywords, RegularExpressions
 from sql_query_formatter_test import *
 from tools import readConfigFile, readFile, writeOutputFile, forwardCheckIfInORBlock
 from tools import checkIfPreviousEndswithNewlineTag, configValidator, allIndex
@@ -187,7 +187,7 @@ def caseSQLKeywords(query: str, case=None, final=False) -> str:
 def groupMultiKeywords(query: str) -> str:
     """Replace a multiple-part keyword by its one-part equivalent (e.g., LEFT JOIN --> LEFTJOIN)"""
     for multikey, newkey in SQLMultiKeywords.keywords.value.items():
-        query = query.replace(multikey.lower(), newkey)
+        query = re.sub(multikey.lower().replace(Constants.MONO_SPACE.value, RegularExpressions.MULTI_SPACES.value), newkey, query)
 
     logging.debug(f"groupMultiKeywords: |{query}|")
     return query   
@@ -311,7 +311,7 @@ def insertNewLineAndSpaces(query: list, prespaces=Constants.EMPTY_SPACE.value, b
         query = splitQuery(query)
     
     keywords_newblock = ["SELECT", "SELECTDISTINCT"]
-    keywords_back = ["JOIN", "LEFTOUTERJOIN", "LEFTJOIN", "LEFTINNERJOIN", "RIGHTJOIN", "RIGHTOUTERJOIN", "RIGHTINNERJOIN", "GROUPBY"]
+    keywords_back = ["JOIN", "INNERJOIN", "LEFTOUTERJOIN", "LEFTJOIN", "LEFTINNERJOIN", "RIGHTJOIN", "RIGHTOUTERJOIN", "RIGHTINNERJOIN", "GROUPBY"]
     keywords_backandnewline = ["FROM", "WHERE"]
     keywords_setseparator = ["MINUS"]
     keywords_nonewline = ["NOT"]

@@ -61,6 +61,10 @@ class Constants(Enum):
     }
 
 
+class RegularExpressions(Enum):
+    MULTI_SPACES = '( +)'
+
+
 class SQLKeywords(Enum):
     keywords = [
         "SELECT",
@@ -68,6 +72,7 @@ class SQLKeywords(Enum):
         "JOIN",
         "LEFT",
         "OUTER",
+        "INNER",
         "WHERE",
         " ON ",
         "AND",
@@ -115,6 +120,7 @@ class SQLMultiKeywords(Enum):
         "RIGHT JOIN": "RIGHTJOIN",
         "RIGHT OUTER JOIN": "RIGHTOUTERJOIN",
         "RIGHT INNER JOIN": "RIGHTINNERJOIN",
+        "INNER JOIN": "INNERJOIN",
         "WITHIN GROUP": "WITHINGROUP",
         "SELECT DISTINCT": "SELECTDISTINCT",
         "GROUP BY": "GROUPBY",

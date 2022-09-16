@@ -1,8 +1,21 @@
-select * from tab where tablename='a-b';
-
-
 SELECT
-    cbd10.datcrt
+    cbd10.datcrt,
+    cbd10.datmaj,
+    cbd10.heumaj,
+    cbd10.usrmaj,
+    cbd10.pgmmaj,
+    cbd10.refopn,
+    cbd10.staopn,
+    cbd10.numcar_int,
+    cbd10.codges,
+    zzc01.libel1_1,
+    cbd10.codopn,
+    cbd13.libopn_1,
+    cbd10.codzon,
+    cbd50.libzon_1,
+    cbd10.datopn,
+    cbd10.valatt_car_new,
+    cbd10.valatt_car_old
 FROM
     cbd10 inner
 JOIN zzc01 ON cbd10.codges = zzc01.argtbl
