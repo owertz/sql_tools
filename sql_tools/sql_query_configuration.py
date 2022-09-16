@@ -61,6 +61,10 @@ class Constants(Enum):
     }
 
 
+class RegularExpressions(Enum):
+    MULTI_SPACES = '( +)'
+
+
 class SQLKeywords(Enum):
     keywords = [
         "SELECT",
