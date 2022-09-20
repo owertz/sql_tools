@@ -140,6 +140,7 @@ class SQLMultiKeywords(Enum):
         "NOT LIKE": "NOTLIKE",
         "NOT EXISTS": "NOTEXISTS",
         "IS NOT": "ISNOT",
+        "DELETE FROM": "DELETEFROM",
         #"ORDER BY": "ORDERBY",
     }
         

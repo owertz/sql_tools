@@ -311,8 +311,8 @@ def insertNewLineAndSpaces(query: list, prespaces=Constants.EMPTY_SPACE.value, b
     if isinstance(query, str):
         query = splitQuery(query)
     
-    keywords_notyetconsidered = ["DELETE", "INSERT"]
-    keywords_newblock = ["SELECT", "SELECTDISTINCT", "UPDATE"]
+    keywords_notyetconsidered = ["INSERT"]
+    keywords_newblock = ["SELECT", "SELECTDISTINCT", "UPDATE", "DELETEFROM"]
     keywords_back = ["JOIN", "INNERJOIN", "LEFTOUTERJOIN", "LEFTJOIN", "LEFTINNERJOIN", "RIGHTJOIN", "RIGHTOUTERJOIN", "RIGHTINNERJOIN", "GROUPBY"]
     keywords_backandnewline = ["FROM", "WHERE", "SET"]
     keywords_setseparator = ["MINUS"]
