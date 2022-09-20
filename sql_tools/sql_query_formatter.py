@@ -7,7 +7,8 @@ import re
 from enum import Enum
 #from tkinter import SEPARATOR
 
-from sql_query_configuration import Constants, SQLKeywords, SQLMultiKeywords, RegularExpressions
+from sql_query_configuration import Constants, SQLKeywords, SQLMultiKeywords
+from sql_query_configuration import RegularExpressions, Messages
 from sql_query_formatter_test import *
 from tools import readConfigFile, readFile, writeOutputFile, forwardCheckIfInORBlock
 from tools import checkIfPreviousEndswithNewlineTag, configValidator, allIndex
@@ -84,13 +85,12 @@ FIXME
 [ F ] "select x, count(*) from tab where trim(staan) is null group by x;"
 [ 4 ] "select * from tab where x='a-b';" --> the 'a-b' should remain unchanged. Currently, it becomes 'a - b'
 """
+
+
 class BasicConfiguration(Enum):
     CONFIG_FILE_NAME = "config.ini"
     VALID_LOG_LEVEL = ["DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"]
     VALID_KEYWORDS_CASE = ["upperCase", "lowerCase", "initCap"] # --> ["upperCase: SELECT", "lowerCase: select", "initCap: Select"]
-
-
-
 
 
 def lowerSQLQuery(query: str, comment_open_markers=None, comment_close_markers=None) -> str:
@@ -311,6 +311,7 @@ def insertNewLineAndSpaces(query: list, prespaces=Constants.EMPTY_SPACE.value, b
     if isinstance(query, str):
         query = splitQuery(query)
     
+    keywords_notyetconsidered = ["UPDATE", "DELETE"]
     keywords_newblock = ["SELECT", "SELECTDISTINCT"]
     keywords_back = ["JOIN", "INNERJOIN", "LEFTOUTERJOIN", "LEFTJOIN", "LEFTINNERJOIN", "RIGHTJOIN", "RIGHTOUTERJOIN", "RIGHTINNERJOIN", "GROUPBY"]
     keywords_backandnewline = ["FROM", "WHERE"]
@@ -773,7 +774,7 @@ def insertNewLineAndSpaces(query: list, prespaces=Constants.EMPTY_SPACE.value, b
                     result.append(f"{spaces}{element}{Constants.NEW_LINE.value}")
                 _is_r8after_back_subblock = False
 
-            elif result[k-1].endswith(Constants.SEPARATOR_COMMA.value):
+            elif k>0 and result[k-1].endswith(Constants.SEPARATOR_COMMA.value):
                 result.append(f"{Constants.NEW_LINE.value}{spaces}{element}{Constants.NEW_LINE.value}")
             
             # elif not _after_from and not result[k-1].endswith(Constants.SEPARATOR_COMMA.value):
@@ -781,6 +782,9 @@ def insertNewLineAndSpaces(query: list, prespaces=Constants.EMPTY_SPACE.value, b
 
             elif not _after_from and n_block>0 and result[k-1].rstrip().endswith(Constants.PARENTHESIS_OPEN.value):
                 result.append(f"{element} ")
+
+            elif element in keywords_notyetconsidered: #TO REMOVE WHEN UPDATE/DELETE WILL BE IMPLEMENTED
+                return [Messages.QUERY_NOT_SUPPORTED.value], 0
 
             else:
                 result.append(f"{spaces}{element}{Constants.NEW_LINE.value}")

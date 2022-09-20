@@ -1,5 +1,6 @@
 import logging
 import os
+from pyexpat.errors import messages
 import re
 
 from enum import Enum
@@ -25,6 +26,11 @@ FIXME
 -----
 -
 """
+
+
+class Messages(Enum):
+    QUERY_NOT_SUPPORTED = "Sorry, but only the SELECT/type queries are currently supported"
+
 
 class Constants(Enum):
     """Define some constants"""
@@ -68,6 +74,8 @@ class RegularExpressions(Enum):
 class SQLKeywords(Enum):
     keywords = [
         "SELECT",
+        "UPDATE",
+        "DELETE",
         "FROM",
         "JOIN",
         "LEFT",
@@ -130,3 +138,12 @@ class SQLMultiKeywords(Enum):
         "IS NOT": "ISNOT",
         #"ORDER BY": "ORDERBY",
     }
+        
+
+    def main():
+        """Main function used when running the file"""
+        print(SQLKeywords.keywords.value)
+
+
+    if __name__ == "__main__":
+        main()
