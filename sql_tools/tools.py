@@ -251,6 +251,8 @@ def checkMultiQueryInFile(query: str):
            "Test ; ; test"). Might be solved by the previous FIXME
     """
     queries = {}
+
+    query = query.strip()
     if query.count(Constants.QUERY_CLOSURE.value) <= 1:
         queries[0] = query
 

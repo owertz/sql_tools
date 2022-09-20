@@ -1,17 +1,3 @@
-SELECT x FROM    cbd10 
-left    
-join  a on b=c  
-left   outer  
-JOIN   a on b=c  
-left    
-inner  JOIN  a on b=c  
-right  join   
-a on b=c  
-right  
-outer   join  a on b=c  
-right  inner   
-join  a on b=c  
-inner  
-join   a on b=c  
-join   a on b=c  
-;
+select l.numcli as 'client', c.numcpt as 'account' from ccd01 c left join cld01 l on l.numcli=c.numcli where c.numcli='01010101';   
+
+update cld01 set staann='D' datmaj=to_char(test, 'time') where numcli='01010101';   

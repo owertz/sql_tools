@@ -1,5 +1,6 @@
 import logging
 import os
+from pyexpat.errors import messages
 import re
 
 from enum import Enum
@@ -26,6 +27,11 @@ FIXME
 -
 """
 
+
+class Messages(Enum):
+    QUERY_NOT_SUPPORTED = "Sorry, but only the SELECT/UPDATE query types are currently supported"
+
+
 class Constants(Enum):
     """Define some constants"""
     HOOK_SPACE = u'\u02eb'
@@ -37,6 +43,7 @@ class Constants(Enum):
     TWELVE_SPACES = 12 * MONO_SPACE
     SURROGATE = u'\u23b5'
     NEW_LINE = "\n"
+    CARRIAGE_RETURN = "\r"
     SEPARATOR_COMMA = ","
     STAR = "*"
     PARENTHESIS_OPEN = "("
@@ -68,7 +75,11 @@ class RegularExpressions(Enum):
 class SQLKeywords(Enum):
     keywords = [
         "SELECT",
+        "UPDATE",
+        "DELETE",
+        "INSERT",
         "FROM",
+        "SET",
         "JOIN",
         "LEFT",
         "OUTER",
@@ -110,6 +121,7 @@ class SQLKeywords(Enum):
         "CASE",
         "WHEN",
         "TRIM",
+        "TO_CHAR",
     ]
 
 class SQLMultiKeywords(Enum):
@@ -130,3 +142,12 @@ class SQLMultiKeywords(Enum):
         "IS NOT": "ISNOT",
         #"ORDER BY": "ORDERBY",
     }
+        
+
+    def main():
+        """Main function used when running the file"""
+        print(SQLKeywords.keywords.value)
+
+
+    if __name__ == "__main__":
+        main()
