@@ -326,7 +326,7 @@ def insertNewLineAndSpaces(query: list, prespaces=Constants.EMPTY_SPACE.value, b
         "NOTEXISTS": ("(\n", "still",)
         #"PARTITION": ("BY", "back"),
     }
-    keywords_function = ["REPLACE", "SUBSTR", "LISTAGG", "COUNT", "DECODE", "DATEDIFF", "SUM", "AVG", "TRIM"]
+    keywords_function = ["REPLACE", "SUBSTR", "LISTAGG", "COUNT", "DECODE", "DATEDIFF", "SUM", "AVG", "TRIM", "TO_CHAR"]
     keywords_all = (
         keywords_newblock +
         keywords_back + 

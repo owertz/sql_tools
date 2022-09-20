@@ -1,1 +1,3 @@
-update emd11 set refexn='B9G02XM0X8', numtie='test' where numcpt='108000758478' and refmvt='B9G08EMMHP9HUC1A' and refexn=' '
+select l.numcli as 'client', c.numcpt as 'account' from ccd01 c left join cld01 l on l.numcli=c.numcli where c.numcli='01010101';   
+
+update cld01 set staann='D' datmaj=to_char(test, 'time') where numcli='01010101';   

@@ -120,6 +120,7 @@ class SQLKeywords(Enum):
         "CASE",
         "WHEN",
         "TRIM",
+        "TO_CHAR",
     ]
 
 class SQLMultiKeywords(Enum):
