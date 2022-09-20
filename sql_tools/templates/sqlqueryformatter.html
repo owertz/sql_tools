@@ -21,14 +21,33 @@
 
 {% block content %}
 <br/>
-<p>The <strong>SQL Query Formatter</strong> tool will help you to write readable and maintainable query by applying the best practices.</p>
-<!--p>Write your SQL query(ies) here and press submit.<br/></p-->
-
-<!-- FIXME: to add in a right-side column
-<p>For instance, avoid:</p>
-<pre class="pre-scrollable">select name, surname, substr(date, 1, 4) "Year" from employees where id>100 order by name asc, surname desc;</pre>
-<p>but prefer:</p>
-<pre class="pre-scrollable">SELECT
+<div class="container-fluid">
+    <div class="row">        
+        <div class="col-8">
+            <form method="post">
+                <div class="form-group">
+                    <label for="content">Your query(ies)</label>
+                    <textarea name="content" placeholder="Write your query(ies) here" rows="5" style="font-family: monospace"
+                            class="form-control">{{ request.form['content'] }}
+                    </textarea>
+                </div>
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Process</button>
+                <br/>
+                <br/>
+                Result:
+                <br/>
+                <textarea name="result" rows="20" cols="100" style="font-family: monospace; font-size:14px; color:#24788F" class="form-control">
+{{ myquery }}
+                </textarea>
+            </form>
+            <br/>
+        </div>
+        <div class="col-4">
+            <p>The <strong>SQL Query Formatter</strong> tool will help you to write readable and maintainable queries by applying the best practices.</p>
+            <p>For instance:</p>
+            <pre class="bg-light text-dark">select name, surname, substr(date, 1, 4) "Year" from employees where id>100 order by name, surname desc;</pre>
+            <p>will be replaced by:</p>
+            <pre class="bg-light text-dark">SELECT
     name,
     surname,
     SUBSTR(date, 1, 4) "Year"
@@ -37,21 +56,30 @@ FROM
 WHERE
     id > 100
 ORDER BY
-    name asc,
+    name,
     surname DESC
-;
-</pre>
--->
+;           </pre>
+            <p>Please end your queries with a semicolon.</p>
+            <p>To reset the page, click on the <strong>Reset</strong> button in the top banner.</p>
+            <p>To report a bug, click on <strong>Report a bug</strong> in the top banner to be redirected to the <em>Github</em> page or send me an 
+                <a href="mailto:olivier.wertz@soprabanking.com?subject=[SQL Query Formatter] Report a bug" class="text-decoration-none">email
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-envelope" viewBox="0 2 16 16">
+                        <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4Zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2Zm13 2.383-4.708 2.825L15 11.105V5.383Zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741ZM1 11.105l4.708-2.897L1 5.383v5.722Z"></path>
+                    </svg>
+                </a> 
+              . Thanks for your collaboration.</p>
+        </div>        
+    </div>
+</div>
 
+
+<!--
 <form method="post">
     <div class="form-group">
         <label for="content">Your query(ies)</label>
         <textarea name="content" placeholder="Write your query(ies) here" rows="5" cols="136" style="font-family: monospace"
                   class="form-control">{{ request.form['content'] }}</textarea>
     </div>
-    <!--div class="form-group">
-        <button type="submit" class="btn btn-primary">Submit</button>
-    </div-->
     <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Process</button>
     <br/>
     <br/>
@@ -61,4 +89,5 @@ ORDER BY
         </textarea>
 </form>
 <br/>
+-->
 {% endblock %}
