@@ -29,7 +29,7 @@ FIXME
 
 
 class Messages(Enum):
-    QUERY_NOT_SUPPORTED = "Sorry, but only the SELECT/type queries are currently supported"
+    QUERY_NOT_SUPPORTED = "Sorry, but only the SELECT/UPDATE query types are currently supported"
 
 
 class Constants(Enum):
@@ -76,7 +76,9 @@ class SQLKeywords(Enum):
         "SELECT",
         "UPDATE",
         "DELETE",
+        "INSERT",
         "FROM",
+        "SET",
         "JOIN",
         "LEFT",
         "OUTER",

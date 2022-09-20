@@ -1,1 +1,1 @@
-update cld01 set staann='D' where numcli='01010101' ;
+update emd11 set refexn='B9G02XM0X8', numtie='test' where numcpt='108000758478' and refmvt='B9G08EMMHP9HUC1A' and refexn=' '
