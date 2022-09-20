@@ -11,13 +11,11 @@
 {% block navbar_content %}
 <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
     <div class="navbar-nav">
-      <a class="nav-item nav-link active" href="{{ url_for('sqlqueryformatter')}}">Reset <span class="sr-only">(current)</span></a>
-      <a class="nav-item nav-link" href="mailto:olivier.wertz@soprabanking.com?subject=[SQL Query Formatter] I have a suggestion" target="_blank">Any suggestion?</a>
-      <a class="nav-item nav-link" href="https://github.com/owertz/sql_tools/issues" target="_blank">Report a bug on <em>Github</em></a>
-      <!--a class="nav-item nav-link" href="#">Pricing</a>
-      <a class="nav-item nav-link disabled" href="#">Disabled</a-->
+        <a class="nav-item nav-link active" href="{{ url_for('sqlqueryformatter')}}">Reset <span class="sr-only">(current)</span></a>
+        <a class="nav-item nav-link" href="mailto:olivier.wertz@soprabanking.com?subject=[SQL Query Formatter] I have a suggestion" target="_blank">Any suggestion?</a>
+        <a class="nav-item nav-link" href="https://github.com/owertz/sql_tools/issues" target="_blank">Report a bug on <em>Github</em></a>
     </div>
-  </div>
+</div>
 {% endblock %}
 
 {% block content %}
@@ -68,23 +66,4 @@ ORDER BY
         </div>        
     </div>
 </div>
-
-
-<!--
-<form method="post">
-    <div class="form-group">
-        <label for="content">Your query(ies)</label>
-        <textarea name="content" placeholder="Write your query(ies) here" rows="5" cols="136" style="font-family: monospace"
-                  class="form-control">{{ request.form['content'] }}</textarea>
-    </div>
-    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Process</button>
-    <br/>
-    <br/>
-    Result:
-    <textarea name="result" rows="20" cols="140" style="font-family: monospace; font-size:14px; color:#24788F">
-{{ myquery }}
-        </textarea>
-</form>
-<br/>
--->
 {% endblock %}
