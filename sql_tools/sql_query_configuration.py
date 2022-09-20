@@ -43,6 +43,7 @@ class Constants(Enum):
     TWELVE_SPACES = 12 * MONO_SPACE
     SURROGATE = u'\u23b5'
     NEW_LINE = "\n"
+    CARRIAGE_RETURN = "\r"
     SEPARATOR_COMMA = ","
     STAR = "*"
     PARENTHESIS_OPEN = "("

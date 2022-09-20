@@ -252,7 +252,7 @@ def checkMultiQueryInFile(query: str):
     """
     queries = {}
 
-    query = query.strip(Constants.MONO_SPACE.value)
+    query = query.strip()
     if query.count(Constants.QUERY_CLOSURE.value) <= 1:
         queries[0] = query
 
