@@ -4,7 +4,12 @@ import re
 
 from enum import Enum
 
-from sql_query_configuration import Constants
+print("OWEOWE -- sql_query_formatter_test -- ", __name__)
+
+if __name__ in ["sql_tools.sql_tools_test.sql_query_formatter_test"]:
+    from ..sql_tools.sql_query_configuration import Constants
+else:
+    from sql_tools.sql_query_configuration import Constants
 
 __version__ = '0.0.1'
 __author__ = 'OWE'
@@ -31,7 +36,7 @@ queries_for_unittest = [
     "myQuery1a", "myQuery1b", "myQuery1c", "myQuery1d", "myQuery1e", "myQuery1f", "myQuery1g", "myQuery1h", "myQuery1i", "myQuery1j", 
     "myQuery1k1", "myQuery1k2", "myQuery1k3", "myQuery1k4", "myQuery1m",
     "myQuery2", "myQuery2b", "myQuery2c",
-    "myQuery3", "myQuery3b",
+    "myQuery3a", "myQuery3b",
     "myQuery4a", "myQuery4b", "myQuery4c",
     "myQuery5a", "myQuery5b", "myQuery5c", "myQuery5d", "myQuery5e", "myQuery5f", "myQuery5g", "myQuery5h", "myQuery5i",
     "myQuery6a", "myQuery6b",
@@ -100,23 +105,13 @@ myQuery1k4_expected_surrogate = myQuery1k4_expected.replace(Constants.MONO_SPACE
 myQuery1m = """select (a || sum(b)) from x;"""
 myQuery1m_expected = f"SELECT{Constants.NEW_LINE.value}{Constants.FOUR_SPACES.value}(a{Constants.MONO_SPACE.value}||{Constants.MONO_SPACE.value}SUM(b)){Constants.NEW_LINE.value}FROM{Constants.NEW_LINE.value}{Constants.FOUR_SPACES.value}x{Constants.NEW_LINE.value};"
 myQuery1m_expected_surrogate = myQuery1m_expected.replace(Constants.MONO_SPACE.value, Constants.SURROGATE.value)
-""" 
-{Constants.NEW_LINE.value}
-{Constants.NEW_LINE.value}{Constants.FOUR_SPACES.value}
-{Constants.NEW_LINE.value}{Constants.EIGHT_SPACES.value}
-{Constants.NEW_LINE.value}{Constants.TWELVE_SPACES.value}
-{Constants.FOUR_SPACES.value}
-{Constants.MONO_SPACE.value}
-"""
 
-
-
-myQuery2 = """select    perm.APP_FK_COD , perm.RESOURCE_TYPE_FK_COD,   perm.PROFILE_FK_COD from EROLE_PERMISSION perm where 
+myQuery2a = """select    perm.APP_FK_COD , perm.RESOURCE_TYPE_FK_COD,   perm.PROFILE_FK_COD from EROLE_PERMISSION perm where 
 perm.PROFILE_FK_COD = prof.PROFILE_COD
 and grouplk.PROFILE_FK_COD =prof.PROFILE_COD and profgrp.PROFILEGROUP_COD= grouplk.PROFILE_GROUP_FK_COD
 order by perm.RESOURCE_FK_COD desc   , perm.APP_FK_COD   Desc  ;"""
-myQuery2_expected = f"SELECT{Constants.NEW_LINE.value}{Constants.FOUR_SPACES.value}perm.app_fk_cod,{Constants.NEW_LINE.value}{Constants.FOUR_SPACES.value}perm.resource_type_fk_cod,{Constants.NEW_LINE.value}{Constants.FOUR_SPACES.value}perm.profile_fk_cod{Constants.NEW_LINE.value}FROM{Constants.NEW_LINE.value}{Constants.FOUR_SPACES.value}erole_permission{Constants.MONO_SPACE.value}perm{Constants.NEW_LINE.value}WHERE{Constants.NEW_LINE.value}{Constants.FOUR_SPACES.value}perm.profile_fk_cod{Constants.MONO_SPACE.value}={Constants.MONO_SPACE.value}prof.profile_cod{Constants.NEW_LINE.value}{Constants.FOUR_SPACES.value}AND{Constants.MONO_SPACE.value}grouplk.profile_fk_cod{Constants.MONO_SPACE.value}={Constants.MONO_SPACE.value}prof.profile_cod{Constants.NEW_LINE.value}{Constants.FOUR_SPACES.value}AND{Constants.MONO_SPACE.value}profgrp.profilegroup_cod{Constants.MONO_SPACE.value}={Constants.MONO_SPACE.value}grouplk.profile_group_fk_cod{Constants.NEW_LINE.value}ORDER BY{Constants.NEW_LINE.value}{Constants.FOUR_SPACES.value}perm.resource_fk_cod{Constants.MONO_SPACE.value}DESC,{Constants.NEW_LINE.value}{Constants.FOUR_SPACES.value}perm.app_fk_cod{Constants.MONO_SPACE.value}DESC{Constants.NEW_LINE.value};"
-myQuery2_expected_surrogate = myQuery2_expected.replace(Constants.MONO_SPACE.value, Constants.SURROGATE.value)
+myQuery2a_expected = f"SELECT{Constants.NEW_LINE.value}{Constants.FOUR_SPACES.value}perm.app_fk_cod,{Constants.NEW_LINE.value}{Constants.FOUR_SPACES.value}perm.resource_type_fk_cod,{Constants.NEW_LINE.value}{Constants.FOUR_SPACES.value}perm.profile_fk_cod{Constants.NEW_LINE.value}FROM{Constants.NEW_LINE.value}{Constants.FOUR_SPACES.value}erole_permission{Constants.MONO_SPACE.value}perm{Constants.NEW_LINE.value}WHERE{Constants.NEW_LINE.value}{Constants.FOUR_SPACES.value}perm.profile_fk_cod{Constants.MONO_SPACE.value}={Constants.MONO_SPACE.value}prof.profile_cod{Constants.NEW_LINE.value}{Constants.FOUR_SPACES.value}AND{Constants.MONO_SPACE.value}grouplk.profile_fk_cod{Constants.MONO_SPACE.value}={Constants.MONO_SPACE.value}prof.profile_cod{Constants.NEW_LINE.value}{Constants.FOUR_SPACES.value}AND{Constants.MONO_SPACE.value}profgrp.profilegroup_cod{Constants.MONO_SPACE.value}={Constants.MONO_SPACE.value}grouplk.profile_group_fk_cod{Constants.NEW_LINE.value}ORDER BY{Constants.NEW_LINE.value}{Constants.FOUR_SPACES.value}perm.resource_fk_cod{Constants.MONO_SPACE.value}DESC,{Constants.NEW_LINE.value}{Constants.FOUR_SPACES.value}perm.app_fk_cod{Constants.MONO_SPACE.value}DESC{Constants.NEW_LINE.value};"
+myQuery2a_expected_surrogate = myQuery2a_expected.replace(Constants.MONO_SPACE.value, Constants.SURROGATE.value)
 
 myQuery2b = """select * from pyd05_de where (numtie_1 in ('') or numtie_2 in ('')) order by refrel asc;"""
 myQuery2b_expected = f"SELECT{Constants.NEW_LINE.value}{Constants.FOUR_SPACES.value}*{Constants.NEW_LINE.value}FROM{Constants.NEW_LINE.value}{Constants.FOUR_SPACES.value}pyd05_de{Constants.NEW_LINE.value}WHERE{Constants.NEW_LINE.value}{Constants.FOUR_SPACES.value}(numtie_1{Constants.MONO_SPACE.value}IN{Constants.MONO_SPACE.value}(''){Constants.MONO_SPACE.value}OR{Constants.MONO_SPACE.value}numtie_2{Constants.MONO_SPACE.value}IN{Constants.MONO_SPACE.value}('')){Constants.NEW_LINE.value}ORDER{Constants.MONO_SPACE.value}BY{Constants.NEW_LINE.value}{Constants.FOUR_SPACES.value}refrel{Constants.MONO_SPACE.value}ASC{Constants.NEW_LINE.value};"
@@ -126,9 +121,9 @@ myQuery2c = """select * from pyd05_de where trim(staan) is null and (numtie_1 in
 myQuery2c_expected = f"SELECT{Constants.NEW_LINE.value}{Constants.FOUR_SPACES.value}*{Constants.NEW_LINE.value}FROM{Constants.NEW_LINE.value}{Constants.FOUR_SPACES.value}pyd05_de{Constants.NEW_LINE.value}WHERE{Constants.NEW_LINE.value}{Constants.FOUR_SPACES.value}TRIM(staan){Constants.MONO_SPACE.value}IS{Constants.MONO_SPACE.value}NULL{Constants.NEW_LINE.value}{Constants.FOUR_SPACES.value}AND{Constants.MONO_SPACE.value}(numtie_1{Constants.MONO_SPACE.value}IN{Constants.MONO_SPACE.value}('P0001R6E'){Constants.MONO_SPACE.value}OR{Constants.MONO_SPACE.value}numtie_2{Constants.MONO_SPACE.value}IN{Constants.MONO_SPACE.value}('P0001R6E')){Constants.NEW_LINE.value}ORDER⎵BY{Constants.NEW_LINE.value}{Constants.FOUR_SPACES.value}heumaj{Constants.NEW_LINE.value};"
 myQuery2c_expected_surrogate = myQuery2c_expected.replace(Constants.MONO_SPACE.value, Constants.SURROGATE.value)
 
-myQuery3 = """select test from DMD01 d01 where exists (  select null from zz051 z51 where z51.x =d01.y and z51.TEST='COMPLETED') order by test desc;"""
-myQuery3_expected = f"SELECT{Constants.NEW_LINE.value}{Constants.FOUR_SPACES.value}test{Constants.NEW_LINE.value}FROM{Constants.NEW_LINE.value}{Constants.FOUR_SPACES.value}dmd01{Constants.MONO_SPACE.value}d01{Constants.NEW_LINE.value}WHERE{Constants.NEW_LINE.value}{Constants.FOUR_SPACES.value}EXISTS{Constants.MONO_SPACE.value}({Constants.NEW_LINE.value}{Constants.EIGHT_SPACES.value}SELECT{Constants.NEW_LINE.value}{Constants.TWELVE_SPACES.value}NULL{Constants.NEW_LINE.value}{Constants.EIGHT_SPACES.value}FROM{Constants.NEW_LINE.value}{Constants.TWELVE_SPACES.value}zz051 z51{Constants.NEW_LINE.value}{Constants.EIGHT_SPACES.value}WHERE{Constants.NEW_LINE.value}{Constants.TWELVE_SPACES.value}z51.x{Constants.MONO_SPACE.value}={Constants.MONO_SPACE.value}d01.y{Constants.NEW_LINE.value}{Constants.TWELVE_SPACES.value}AND z51.test{Constants.MONO_SPACE.value}={Constants.MONO_SPACE.value}'COMPLETED'{Constants.NEW_LINE.value}{Constants.FOUR_SPACES.value}){Constants.NEW_LINE.value}ORDER{Constants.MONO_SPACE.value}BY{Constants.NEW_LINE.value}{Constants.FOUR_SPACES.value}test{Constants.MONO_SPACE.value}DESC{Constants.NEW_LINE.value};"
-myQuery3_expected_surrogate = myQuery3_expected.replace(Constants.MONO_SPACE.value, Constants.SURROGATE.value)
+myQuery3a = """select test from DMD01 d01 where exists (  select null from zz051 z51 where z51.x =d01.y and z51.TEST='COMPLETED') order by test desc;"""
+myQuery3a_expected = f"SELECT{Constants.NEW_LINE.value}{Constants.FOUR_SPACES.value}test{Constants.NEW_LINE.value}FROM{Constants.NEW_LINE.value}{Constants.FOUR_SPACES.value}dmd01{Constants.MONO_SPACE.value}d01{Constants.NEW_LINE.value}WHERE{Constants.NEW_LINE.value}{Constants.FOUR_SPACES.value}EXISTS{Constants.MONO_SPACE.value}({Constants.NEW_LINE.value}{Constants.EIGHT_SPACES.value}SELECT{Constants.NEW_LINE.value}{Constants.TWELVE_SPACES.value}NULL{Constants.NEW_LINE.value}{Constants.EIGHT_SPACES.value}FROM{Constants.NEW_LINE.value}{Constants.TWELVE_SPACES.value}zz051 z51{Constants.NEW_LINE.value}{Constants.EIGHT_SPACES.value}WHERE{Constants.NEW_LINE.value}{Constants.TWELVE_SPACES.value}z51.x{Constants.MONO_SPACE.value}={Constants.MONO_SPACE.value}d01.y{Constants.NEW_LINE.value}{Constants.TWELVE_SPACES.value}AND z51.test{Constants.MONO_SPACE.value}={Constants.MONO_SPACE.value}'COMPLETED'{Constants.NEW_LINE.value}{Constants.FOUR_SPACES.value}){Constants.NEW_LINE.value}ORDER{Constants.MONO_SPACE.value}BY{Constants.NEW_LINE.value}{Constants.FOUR_SPACES.value}test{Constants.MONO_SPACE.value}DESC{Constants.NEW_LINE.value};"
+myQuery3a_expected_surrogate = myQuery3a_expected.replace(Constants.MONO_SPACE.value, Constants.SURROGATE.value)
 
 myQuery3b = """select * from pyd01 p01 where not exists (select null from pyd20 p20 where p20.numtie=p01.numtie and p20.numtie not like 'P00B%') and p01.numtie like 'P000%' order by 1 desc;"""
 myQuery3b_expected = f"SELECT{Constants.NEW_LINE.value}{Constants.FOUR_SPACES.value}*{Constants.NEW_LINE.value}FROM{Constants.NEW_LINE.value}{Constants.FOUR_SPACES.value}pyd01{Constants.MONO_SPACE.value}p01{Constants.NEW_LINE.value}WHERE{Constants.NEW_LINE.value}{Constants.FOUR_SPACES.value}NOT{Constants.MONO_SPACE.value}EXISTS{Constants.MONO_SPACE.value}({Constants.NEW_LINE.value}{Constants.EIGHT_SPACES.value}SELECT{Constants.NEW_LINE.value}{Constants.TWELVE_SPACES.value}NULL{Constants.NEW_LINE.value}{Constants.EIGHT_SPACES.value}FROM{Constants.NEW_LINE.value}{Constants.TWELVE_SPACES.value}pyd20{Constants.MONO_SPACE.value}p20{Constants.NEW_LINE.value}{Constants.EIGHT_SPACES.value}WHERE{Constants.NEW_LINE.value}{Constants.TWELVE_SPACES.value}p20.numtie{Constants.MONO_SPACE.value}={Constants.MONO_SPACE.value}p01.numtie{Constants.NEW_LINE.value}{Constants.TWELVE_SPACES.value}AND{Constants.MONO_SPACE.value}p20.numtie{Constants.MONO_SPACE.value}NOT{Constants.MONO_SPACE.value}LIKE{Constants.MONO_SPACE.value}'P00B%'{Constants.NEW_LINE.value}{Constants.FOUR_SPACES.value}){Constants.NEW_LINE.value}{Constants.FOUR_SPACES.value}AND{Constants.MONO_SPACE.value}p01.numtie{Constants.MONO_SPACE.value}LIKE{Constants.MONO_SPACE.value}'P000%'{Constants.NEW_LINE.value}ORDER{Constants.MONO_SPACE.value}BY{Constants.NEW_LINE.value}{Constants.FOUR_SPACES.value}1{Constants.MONO_SPACE.value}DESC{Constants.NEW_LINE.value};"

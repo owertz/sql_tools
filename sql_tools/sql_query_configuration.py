@@ -5,6 +5,8 @@ import re
 
 from enum import Enum
 
+print("OWEOWE -- sql_query_configuration -- ", __name__)
+
 __version__ = '0.0.b4'
 __author__ = 'OWE'
 
@@ -143,6 +145,7 @@ class SQLMultiKeywords(Enum):
         "NOT EXISTS": "NOTEXISTS",
         "IS NOT": "ISNOT",
         "DELETE FROM": "DELETEFROM",
+        "INSERT INTO": "INSERTINTO",
         #"ORDER BY": "ORDERBY",
     }
         

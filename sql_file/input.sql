@@ -1,0 +1,1 @@
+insert into epk.cwd32 (select * from epk.cwd32a where XXX)
