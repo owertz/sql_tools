@@ -157,6 +157,10 @@ def test_myQuery7c():
     result = formatter(myQuery7c, show_spaces=True)
     assert result == myQuery7c_expected_surrogate
 
+def test_myQuery10a():
+    result = formatter(myQuery10a, show_spaces=True)
+    assert result == myQuery10a_expected_surrogate
+
 if __name__ == "__main__":
     print(formatter("select * from pyd01;"))
     test_myQuery1a()

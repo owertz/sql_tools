@@ -1,1 +1,1 @@
-insert into epk.cwd32 (select * from epk.cwd32a where XXX)
+update cld01 set staann='D', numcli='C001' where numcli='C000' and trim(staan) is null;
