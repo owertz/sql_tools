@@ -1001,6 +1001,9 @@ def main(args=None):
     # logging.debug(f"Final result: {Constants.NEW_LINE.value}{result}")
 
     _myqueries = "".join(readFile(INPUTFILE_PATH))
+    if _myqueries.strip() == Constants.EMPTY_SPACE.value:
+        print(Messages.YODA.value + Constants.MONO_SPACE.value + Messages.QUERY_EMPTY.value)
+        return None
     logging.info(f"Read the file '{INPUTFILE_PATH}' and extract the query.")
     myqueries = checkMultiQueryInFile(_myqueries)
     logging.info(f"Number of query(ies) detected: {len(myqueries)}")
