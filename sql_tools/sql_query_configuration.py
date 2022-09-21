@@ -152,9 +152,7 @@ class SQLMultiKeywords(Enum):
 
     def main():
         """Main function used when running the file"""
-        x = sorted(SQLKeywords.keywords.value)
-        for j in x:
-            print(f"\"{j}\",")
+        pass
 
 
     if __name__ == "__main__":

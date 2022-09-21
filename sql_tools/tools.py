@@ -11,9 +11,9 @@ import re
 
 #print("OWEOWE -- tools -- ", __name__)
 if __name__ in ['sql_tools.tools', 'sql_tools.sql_tools.tools']:
-    from .sql_query_configuration import Constants
+    from .sql_query_configuration import Constants, SQLKeywords
 else:
-    from sql_query_configuration import Constants
+    from sql_query_configuration import Constants, SQLKeywords
 
 # BASIC CONFIGURATION
 
@@ -312,10 +312,17 @@ def testcase_re_sub_with_function():
     return result
 
 
+def sortSQLKeywords():
+    """Display a sorted version of the SQL keywords."""
+    for key in sorted(SQLKeywords.keywords.value):
+        print(f"\"{key}\",")
+
+
 def main():
     #print(generateAllCaseVersionOfAString('count '))
-    result = testcase_re_sub_with_function()
-    print(result)
+    #result = testcase_re_sub_with_function()
+    #print(result)
+    sortSQLKeywords()
 
 if __name__ == '__main__':
     main()
