@@ -1,1 +1,5 @@
-delete from epk.xod10 where refopn='B9F25XO00000001Z';
+SELECT COUNT(CustomerID), Country
+FROM Customers
+GROUP BY Country
+HAVING COUNT(CustomerID) > 5
+ORDER BY COUNT(CustomerID) DESC;

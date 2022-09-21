@@ -244,6 +244,13 @@ def removeNewlineTagOnLastEntry(result: list) -> list:
     result[-1] = result[-1].rstrip(Constants.NEW_LINE.value)
     return result
 
+def removeTrailingSpacesOnLastEntry(result: list, k: int =None) -> list:
+    """Remove the trailing \n from the last entry of the list"""
+    if k is None:
+        k = -1
+    result[k] = result[k].rstrip(Constants.MONO_SPACE.value)
+    return result
+
 def checkMultiQueryInFile(query: str):
     """
     Check whether there is more than one query in the input file. If so, split 
