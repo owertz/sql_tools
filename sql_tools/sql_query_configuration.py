@@ -5,7 +5,7 @@ import re
 
 from enum import Enum
 
-print("OWEOWE -- sql_query_configuration -- ", __name__)
+#print("OWEOWE -- sql_query_configuration -- ", __name__)
 
 __version__ = '0.0.b4'
 __author__ = 'OWE'
@@ -70,6 +70,20 @@ class Constants(Enum):
             "close": "*/"
         },
     }
+    BRACKET_REPERTOIRE = {
+        "parenthesis": {
+            "open": "(",
+            "close": ")"
+        },
+        "squared": {
+            "open": "[",
+            "close": "]"
+        },
+        "curled": {
+            "open": "{",
+            "close": "}"
+        }
+    }
 
 
 class RegularExpressions(Enum):
@@ -78,54 +92,54 @@ class RegularExpressions(Enum):
 
 class SQLKeywords(Enum):
     keywords = [
-        "SELECT",
-        "UPDATE",
-        "DELETE",
-        "INSERT",
-        "FROM",
-        "SET",
-        "JOIN",
-        "LEFT",
-        "OUTER",
-        "INNER",
-        "WHERE",
-        " ON ",
-        "AND",
-        "EXISTS",
-        "NOT",
-        "SUBSTR",
-        "ORDER BY",
-        "NULL",
-        "LIKE",
-        " DESC",
+        " AS ",
         " ASC",
         " COUNT",
-        "REPLACE",
-        " AS ",
-        " IS ",
-        "DISTINCT",
-        "LISTAGG",
-        "DECODE",
-        "PARTITION",
-        "WITHIN",
-        "GROUP ",
+        " DESC",
         " IN ",
-        "MINUS",
-        "HAVING",
+        " IS ",
+        " ON ",
         " OR ",
-        "OVER",
-        "||",
-        "SUM",
-        "THEN",
+        "AND",
+        "AVG",
+        "CASE",
+        "DATEDIFF",
+        "DECODE",
+        "DELETE",
+        "DISTINCT",
         "ELSE",
         "END",
-        "AVG",
-        "DATEDIFF",
+        "EXISTS",
+        "FROM",
+        "GROUP ",
+        "HAVING",
+        "INNER",
+        "INSERT",
         "ISNULL",
-        "CASE",
-        "WHEN",
-        "TRIM",
+        "JOIN",
+        "LEFT",
+        "LIKE",
+        "LISTAGG",
+        "MINUS",
+        "NOT",
+        "NULL",
+        "ORDER BY",
+        "OUTER",
+        "OVER",
+        "PARTITION",
+        "REPLACE",
+        "SELECT",
+        "SET",
+        "SUBSTR",
+        "SUM",
+        "THEN",
         "TO_CHAR",
+        "TRIM",
+        "UPDATE",
+        "WHEN",
+        "WHERE",
+        "WITHIN",
+        "||",
     ]
 
 class SQLMultiKeywords(Enum):
@@ -152,7 +166,7 @@ class SQLMultiKeywords(Enum):
 
     def main():
         """Main function used when running the file"""
-        print(SQLKeywords.keywords.value)
+        pass
 
 
     if __name__ == "__main__":

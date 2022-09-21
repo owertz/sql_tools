@@ -7,7 +7,7 @@ import re
 from enum import Enum
 #from tkinter import SEPARATOR
 
-print("OWEOWE -- sql_query_formatter -- ", __name__)
+#print("OWEOWE -- sql_query_formatter -- ", __name__)
 if __name__ in ['sql_tools.sql_query_formatter', 'sql_tools.sql_tools.sql_query_formatter']:
     from .sql_query_configuration import Constants, SQLKeywords, SQLMultiKeywords
     from .sql_query_configuration import RegularExpressions, Messages
@@ -17,6 +17,7 @@ if __name__ in ['sql_tools.sql_query_formatter', 'sql_tools.sql_tools.sql_query_
     from .tools import checkMultiQueryInFile, addHook, removeHook, addSpaceAfterComma
     from .tools import removeNewlineTagOnLastEntry, checkIfSubstringSurroundingIsSpaces
     from .tools import replaceSpecificOccurencesOfSubstringInString, isFunction
+    from .tools import removeTrailingSpacesOnLastEntry
 else:
     from sql_query_configuration import Constants, SQLKeywords, SQLMultiKeywords
     from sql_query_configuration import RegularExpressions, Messages
@@ -26,6 +27,7 @@ else:
     from tools import checkMultiQueryInFile, addHook, removeHook, addSpaceAfterComma
     from tools import removeNewlineTagOnLastEntry, checkIfSubstringSurroundingIsSpaces
     from tools import replaceSpecificOccurencesOfSubstringInString, isFunction
+    from tools import removeTrailingSpacesOnLastEntry
 
 
 __version__ = '0.0.b4'
@@ -330,6 +332,7 @@ def insertNewLineAndSpaces(query: list, prespaces=Constants.EMPTY_SPACE.value, b
     keywords_nonewline = ["NOT"]
     keywords_newlineandspaces = ["AND", "WITHINGROUP", "OVER"]
     keywords_inline = ["ISNULL", "ON", "AS", "IS", "IN", "HAVING", "OR", "PARTITIONBY", "||", "THEN", "ELSE", "END", "CASE", "WHEN"]
+    keywords_inline_notrailingspace = ["DESC", "ASC"]
     keywords_follow = ["LIKE", "NOTLIKE"]
     keywords_multi = {
         "ORDER": ("BY", "back"),
@@ -347,6 +350,7 @@ def insertNewLineAndSpaces(query: list, prespaces=Constants.EMPTY_SPACE.value, b
         list(keywords_multi.keys()) + 
         keywords_function + 
         keywords_inline + 
+        keywords_inline_notrailingspace +
         keywords_newlineandspaces + 
         keywords_setseparator
     )
@@ -569,9 +573,15 @@ def insertNewLineAndSpaces(query: list, prespaces=Constants.EMPTY_SPACE.value, b
                 result.append(f"{spaces}{element} ") 
                 _forward = True
 
+            elif element in keywords_inline_notrailingspace:
+                if checkIfPreviousEndswithNewlineTag(result):
+                    result = removeNewlineTagOnLastEntry(result)
+                result.append(f"{Constants.MONO_SPACE.value}{element}")
+
             elif element in keywords_inline+keywords_follow:
                 if checkIfPreviousEndswithNewlineTag(result):
-                    result[k-1] = result[k-1].rstrip(Constants.MONO_SPACE.value)[:-1]
+                    #result[k-1] = result[k-1].rstrip(Constants.MONO_SPACE.value)[:-1]
+                    result = removeNewlineTagOnLastEntry(result)
                     result.append(f"{Constants.MONO_SPACE.value}{element}{Constants.MONO_SPACE.value}") 
                 elif result[k-1].rstrip() == Constants.PARENTHESIS_OPEN.value:
                     result.append(f"{element}{Constants.MONO_SPACE.value}")
@@ -609,11 +619,17 @@ def insertNewLineAndSpaces(query: list, prespaces=Constants.EMPTY_SPACE.value, b
                 _pass = True    
 
             elif element in keywords_function:
-                if result[k-1].strip() in keywords_newblock or result[-1].strip() in keywords_newblock or result[k-1].strip()[-1] in (Constants.SEPARATOR_COMMA.value, Constants.PARENTHESIS_CLOSE.value):
+                if (result[k-1].strip() in keywords_newblock 
+                        or result[-1].strip() in keywords_newblock 
+                        or (result[k-1].strip() != Constants.EMPTY_SPACE.value and result[k-1].strip()[-1] in (Constants.SEPARATOR_COMMA.value, Constants.PARENTHESIS_CLOSE.value))
+                        ):
                     if checkIfPreviousEndswithNewlineTag(result):
                         result.append(f"{spaces}{element}")
                     else:
                         result.append(f"{Constants.NEW_LINE.value}{spaces}{element}")
+                
+                elif result[k-1].strip() == Constants.EMPTY_SPACE.value:
+                    result.append(f"{spaces}{element}")
 
                 elif not _after_from and not result[k-1].rstrip().endswith(Constants.SEPARATOR_COMMA.value): # Btw SELECT and FROM, to avoid 'SELECT a||\n⎵⎵⎵⎵SUM(...' and get 'SELECT a||SUM(b)...'
                     result[k-1] = result[k-1].rstrip(Constants.NEW_LINE.value)
@@ -779,7 +795,8 @@ def insertNewLineAndSpaces(query: list, prespaces=Constants.EMPTY_SPACE.value, b
 
             elif _is_r8after_back_subblock:
                 if result[k-1].strip() == "GROUPBY":
-                    result[k-1] = result[k-1].rstrip(Constants.MONO_SPACE.value)
+                    #result[k-1] = result[k-1].rstrip(Constants.MONO_SPACE.value)
+                    result = removeTrailingSpacesOnLastEntry(result)
                     result.append(f"{Constants.NEW_LINE.value}{spaces}{element}{Constants.NEW_LINE.value}")
                 else:
                     result.append(f"{spaces}{element}{Constants.NEW_LINE.value}")

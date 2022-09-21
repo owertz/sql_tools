@@ -1,1 +1,5 @@
-insert into epk.cwd32 (select * from epk.cwd32a where XXX)
+SELECT COUNT(CustomerID), Country
+FROM Customers
+GROUP BY Country
+HAVING COUNT(CustomerID) > 5
+ORDER BY COUNT(CustomerID) asc;

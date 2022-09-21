@@ -9,11 +9,11 @@ import math
 import re
 
 
-print("OWEOWE -- tools -- ", __name__)
+#print("OWEOWE -- tools -- ", __name__)
 if __name__ in ['sql_tools.tools', 'sql_tools.sql_tools.tools']:
-    from .sql_query_configuration import Constants
+    from .sql_query_configuration import Constants, SQLKeywords
 else:
-    from sql_query_configuration import Constants
+    from sql_query_configuration import Constants, SQLKeywords
 
 # BASIC CONFIGURATION
 
@@ -244,6 +244,13 @@ def removeNewlineTagOnLastEntry(result: list) -> list:
     result[-1] = result[-1].rstrip(Constants.NEW_LINE.value)
     return result
 
+def removeTrailingSpacesOnLastEntry(result: list, k: int =None) -> list:
+    """Remove the trailing \n from the last entry of the list"""
+    if k is None:
+        k = -1
+    result[k] = result[k].rstrip(Constants.MONO_SPACE.value)
+    return result
+
 def checkMultiQueryInFile(query: str):
     """
     Check whether there is more than one query in the input file. If so, split 
@@ -312,10 +319,17 @@ def testcase_re_sub_with_function():
     return result
 
 
+def sortSQLKeywords():
+    """Display a sorted version of the SQL keywords."""
+    for key in sorted(SQLKeywords.keywords.value):
+        print(f"\"{key}\",")
+
+
 def main():
     #print(generateAllCaseVersionOfAString('count '))
-    result = testcase_re_sub_with_function()
-    print(result)
+    #result = testcase_re_sub_with_function()
+    #print(result)
+    sortSQLKeywords()
 
 if __name__ == '__main__':
     main()

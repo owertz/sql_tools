@@ -1,4 +1,4 @@
-print("OWEOWE -- test_sample -- ", __name__)
+#print("OWEOWE -- test_sample -- ", __name__)
 if __name__ == "__main__":
     from sql_tools.sql_query_formatter import formatter
     from sql_tools.sql_query_configuration import Constants
@@ -156,6 +156,14 @@ def test_myQuery7b():
 def test_myQuery7c():
     result = formatter(myQuery7c, show_spaces=True)
     assert result == myQuery7c_expected_surrogate
+
+def test_myQuery10a():
+    result = formatter(myQuery10a, show_spaces=True)
+    assert result == myQuery10a_expected_surrogate
+
+def test_myQuery20a():
+    result = formatter(myQuery20a, show_spaces=True)
+    assert result == myQuery20a_expected_surrogate
 
 if __name__ == "__main__":
     print(formatter("select * from pyd01;"))
