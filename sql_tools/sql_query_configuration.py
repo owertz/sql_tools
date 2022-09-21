@@ -70,6 +70,20 @@ class Constants(Enum):
             "close": "*/"
         },
     }
+    BRACKET_REPERTOIRE = {
+        "parenthesis": {
+            "open": "(",
+            "close": ")"
+        },
+        "squared": {
+            "open": "[",
+            "close": "]"
+        },
+        "curled": {
+            "open": "{",
+            "close": "}"
+        }
+    }
 
 
 class RegularExpressions(Enum):
