@@ -29,7 +29,9 @@ FIXME
 
 
 class Messages(Enum):
-    QUERY_NOT_SUPPORTED = "Sorry, but only the SELECT/UPDATE query types are currently supported"
+    QUERY_NOT_SUPPORTED = "Sorry, but only the SELECT/UPDATE/DELETE query types are currently supported"
+    QUERY_EMPTY = "Than an empty query, better you can do."
+    YODA = "<(°.°)>"
 
 
 class Constants(Enum):

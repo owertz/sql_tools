@@ -1,1 +1,0 @@
-delete from epk.xod10 as 'test' where refopn='B9F25XO00000001Z' and test='42';  

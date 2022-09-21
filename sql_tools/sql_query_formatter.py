@@ -900,8 +900,11 @@ def define_argparse():
 
 def main_formatter(query):
     """Format the query"""
-    if not query:
-        return Constants.EMPTY_SPACE.value
+    #if not query:
+    #    return Constants.EMPTY_SPACE.value
+
+    if query.strip() == Constants.EMPTY_SPACE.value:
+        return Messages.YODA.value + Constants.MONO_SPACE.value + Messages.QUERY_EMPTY.value
 
     MODULE_PATH = os.path.dirname(os.path.realpath(__file__))
     MAIN_PATH = os.path.abspath(os.path.join(MODULE_PATH, '..'))
