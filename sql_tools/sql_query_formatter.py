@@ -7,14 +7,25 @@ import re
 from enum import Enum
 #from tkinter import SEPARATOR
 
-from sql_query_configuration import Constants, SQLKeywords, SQLMultiKeywords
-from sql_query_configuration import RegularExpressions, Messages
-from sql_query_formatter_test import *
-from tools import readConfigFile, readFile, writeOutputFile, forwardCheckIfInORBlock
-from tools import checkIfPreviousEndswithNewlineTag, configValidator, allIndex
-from tools import checkMultiQueryInFile, addHook, removeHook, addSpaceAfterComma
-from tools import removeNewlineTagOnLastEntry, checkIfSubstringSurroundingIsSpaces
-from tools import replaceSpecificOccurencesOfSubstringInString, isFunction
+print("OWEOWE -- sql_query_formatter -- ", __name__)
+if __name__ in ['sql_tools.sql_query_formatter', 'sql_tools.sql_tools.sql_query_formatter']:
+    from .sql_query_configuration import Constants, SQLKeywords, SQLMultiKeywords
+    from .sql_query_configuration import RegularExpressions, Messages
+    #from sql_query_formatter_test import *
+    from .tools import readConfigFile, readFile, writeOutputFile, forwardCheckIfInORBlock
+    from .tools import checkIfPreviousEndswithNewlineTag, configValidator, allIndex
+    from .tools import checkMultiQueryInFile, addHook, removeHook, addSpaceAfterComma
+    from .tools import removeNewlineTagOnLastEntry, checkIfSubstringSurroundingIsSpaces
+    from .tools import replaceSpecificOccurencesOfSubstringInString, isFunction
+else:
+    from sql_query_configuration import Constants, SQLKeywords, SQLMultiKeywords
+    from sql_query_configuration import RegularExpressions, Messages
+    #from sql_query_formatter_test import *
+    from tools import readConfigFile, readFile, writeOutputFile, forwardCheckIfInORBlock
+    from tools import checkIfPreviousEndswithNewlineTag, configValidator, allIndex
+    from tools import checkMultiQueryInFile, addHook, removeHook, addSpaceAfterComma
+    from tools import removeNewlineTagOnLastEntry, checkIfSubstringSurroundingIsSpaces
+    from tools import replaceSpecificOccurencesOfSubstringInString, isFunction
 
 
 __version__ = '0.0.b4'
@@ -311,8 +322,8 @@ def insertNewLineAndSpaces(query: list, prespaces=Constants.EMPTY_SPACE.value, b
     if isinstance(query, str):
         query = splitQuery(query)
     
-    keywords_notyetconsidered = ["INSERT"]
-    keywords_newblock = ["SELECT", "SELECTDISTINCT", "UPDATE", "DELETEFROM"]
+    keywords_notyetconsidered = []
+    keywords_newblock = ["SELECT", "SELECTDISTINCT", "UPDATE", "DELETEFROM", "INSERTINTO"]
     keywords_back = ["JOIN", "INNERJOIN", "LEFTOUTERJOIN", "LEFTJOIN", "LEFTINNERJOIN", "RIGHTJOIN", "RIGHTOUTERJOIN", "RIGHTINNERJOIN", "GROUPBY"]
     keywords_backandnewline = ["FROM", "WHERE", "SET"]
     keywords_setseparator = ["MINUS"]
@@ -900,8 +911,11 @@ def define_argparse():
 
 def main_formatter(query):
     """Format the query"""
-    if not query:
-        return Constants.EMPTY_SPACE.value
+    #if not query:
+    #    return Constants.EMPTY_SPACE.value
+
+    if query.strip() == Constants.EMPTY_SPACE.value:
+        return Messages.YODA.value + Constants.MONO_SPACE.value + Messages.QUERY_EMPTY.value
 
     MODULE_PATH = os.path.dirname(os.path.realpath(__file__))
     MAIN_PATH = os.path.abspath(os.path.join(MODULE_PATH, '..'))
@@ -985,19 +999,22 @@ def main(args=None):
 
     logging.info(f"Script arguments: {args}")
 
-    if args.unitTestOnly or config.get('UNITTEST', False)=='true':
-        for _q in queries_for_unittest:
-            unittest(_q)
-        print(f"{len(queries_for_unittest)} unit tests passed successfully.\n")
-        logging.info(f"{len(queries_for_unittest)} unit tests passed successfully.")
-        if args.unitTestOnly:
-            return None
+    # if args.unitTestOnly or config.get('UNITTEST', False)=='true':
+    #     for _q in queries_for_unittest:
+    #         unittest(_q)
+    #     print(f"{len(queries_for_unittest)} unit tests passed successfully.\n")
+    #     logging.info(f"{len(queries_for_unittest)} unit tests passed successfully.")
+    #     if args.unitTestOnly:
+    #         return None
 
     # myquery = "myQuery6b"
     # result = formatter(globals()[f"{myquery}"], args.showSpaces)
     # logging.debug(f"Final result: {Constants.NEW_LINE.value}{result}")
 
     _myqueries = "".join(readFile(INPUTFILE_PATH))
+    if _myqueries.strip() == Constants.EMPTY_SPACE.value:
+        print(Messages.YODA.value + Constants.MONO_SPACE.value + Messages.QUERY_EMPTY.value)
+        return None
     logging.info(f"Read the file '{INPUTFILE_PATH}' and extract the query.")
     myqueries = checkMultiQueryInFile(_myqueries)
     logging.info(f"Number of query(ies) detected: {len(myqueries)}")

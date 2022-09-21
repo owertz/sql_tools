@@ -5,6 +5,8 @@ import re
 
 from enum import Enum
 
+print("OWEOWE -- sql_query_configuration -- ", __name__)
+
 __version__ = '0.0.b4'
 __author__ = 'OWE'
 
@@ -29,7 +31,9 @@ FIXME
 
 
 class Messages(Enum):
-    QUERY_NOT_SUPPORTED = "Sorry, but only the SELECT/UPDATE query types are currently supported"
+    QUERY_NOT_SUPPORTED = "Sorry, but only the SELECT/UPDATE/DELETE query types are currently supported"
+    QUERY_EMPTY = "Than an empty query, better you can do."
+    YODA = "<(°.°)>"
 
 
 class Constants(Enum):
@@ -141,6 +145,7 @@ class SQLMultiKeywords(Enum):
         "NOT EXISTS": "NOTEXISTS",
         "IS NOT": "ISNOT",
         "DELETE FROM": "DELETEFROM",
+        "INSERT INTO": "INSERTINTO",
         #"ORDER BY": "ORDERBY",
     }
         

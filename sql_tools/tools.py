@@ -8,7 +8,12 @@ import os
 import math
 import re
 
-from sql_query_configuration import Constants
+
+print("OWEOWE -- tools -- ", __name__)
+if __name__ in ['sql_tools.tools', 'sql_tools.sql_tools.tools']:
+    from .sql_query_configuration import Constants
+else:
+    from sql_query_configuration import Constants
 
 # BASIC CONFIGURATION
 
