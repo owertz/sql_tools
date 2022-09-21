@@ -1,1 +1,1 @@
-update cld01 set staann='D', numcli='C001' where numcli='C000' and trim(staan) is null;
+delete from epk.xod10 where refopn='B9F25XO00000001Z';

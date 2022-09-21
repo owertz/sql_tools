@@ -4,7 +4,7 @@ import re
 
 from enum import Enum
 
-print("OWEOWE -- sql_query_formatter_test -- ", __name__)
+#print("OWEOWE -- sql_query_formatter_test -- ", __name__)
 if __name__ in ["sql_tools.sql_tools_test.sql_query_formatter_test"]:
     from ..sql_tools.sql_query_configuration import Constants
 else:
@@ -41,6 +41,7 @@ queries_for_unittest = [
     "myQuery6a", "myQuery6b",
     "myQuery7a", "myQuery7b", "myQuery7c",
     "myQuery10a",
+    "myQuery20a",
 ]
 
 
@@ -299,6 +300,12 @@ myQuery7c_expected_surrogate = myQuery7c_expected.replace(Constants.MONO_SPACE.v
 myQuery10a= """update cld01 set staann='D', numcli='C001' where numcli='C000' and trim(staan) is null;"""
 myQuery10a_expected = f"UPDATE{Constants.NEW_LINE.value}{Constants.FOUR_SPACES.value}cld01{Constants.NEW_LINE.value}SET{Constants.NEW_LINE.value}{Constants.FOUR_SPACES.value}staann{Constants.MONO_SPACE.value}={Constants.MONO_SPACE.value}'D',{Constants.NEW_LINE.value}{Constants.FOUR_SPACES.value}numcli{Constants.MONO_SPACE.value}={Constants.MONO_SPACE.value}'C001'{Constants.NEW_LINE.value}WHERE{Constants.NEW_LINE.value}{Constants.FOUR_SPACES.value}numcli{Constants.MONO_SPACE.value}={Constants.MONO_SPACE.value}'C000'{Constants.NEW_LINE.value}{Constants.FOUR_SPACES.value}AND⎵TRIM(staan){Constants.MONO_SPACE.value}IS{Constants.MONO_SPACE.value}NULL{Constants.NEW_LINE.value};"
 myQuery10a_expected_surrogate = myQuery10a_expected.replace(Constants.MONO_SPACE.value, Constants.SURROGATE.value)
+
+
+# DELETE
+myQuery20a = """delete from epk.xod10 where refopn='B9F25XO00000001Z';"""
+myQuery20a_expected = f"DELETE⎵FROM{Constants.NEW_LINE.value}{Constants.FOUR_SPACES.value}epk.xod10{Constants.NEW_LINE.value}WHERE{Constants.NEW_LINE.value}{Constants.FOUR_SPACES.value}refopn{Constants.MONO_SPACE.value}={Constants.MONO_SPACE.value}'B9F25XO00000001Z'{Constants.NEW_LINE.value};"
+myQuery20a_expected_surrogate = myQuery20a_expected.replace(Constants.MONO_SPACE.value, Constants.SURROGATE.value)
 
 
 # TEST

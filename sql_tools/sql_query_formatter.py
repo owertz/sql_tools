@@ -7,7 +7,7 @@ import re
 from enum import Enum
 #from tkinter import SEPARATOR
 
-print("OWEOWE -- sql_query_formatter -- ", __name__)
+#print("OWEOWE -- sql_query_formatter -- ", __name__)
 if __name__ in ['sql_tools.sql_query_formatter', 'sql_tools.sql_tools.sql_query_formatter']:
     from .sql_query_configuration import Constants, SQLKeywords, SQLMultiKeywords
     from .sql_query_configuration import RegularExpressions, Messages

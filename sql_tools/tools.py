@@ -9,7 +9,7 @@ import math
 import re
 
 
-print("OWEOWE -- tools -- ", __name__)
+#print("OWEOWE -- tools -- ", __name__)
 if __name__ in ['sql_tools.tools', 'sql_tools.sql_tools.tools']:
     from .sql_query_configuration import Constants
 else:
