@@ -251,6 +251,11 @@ def removeTrailingSpacesOnLastEntry(result: list, k: int =None) -> list:
     result[k] = result[k].rstrip(Constants.MONO_SPACE.value)
     return result
 
+def appendSpacesOnLastEntry(result: list, n: int =1) -> list:
+    """Append k spaces to the last entry of the list"""
+    result[-1] = result[-1] + n * Constants.MONO_SPACE.value
+    return result
+
 def checkMultiQueryInFile(query: str):
     """
     Check whether there is more than one query in the input file. If so, split 

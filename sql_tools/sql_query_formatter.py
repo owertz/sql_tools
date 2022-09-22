@@ -17,7 +17,7 @@ if __name__ in ['sql_tools.sql_query_formatter', 'sql_tools.sql_tools.sql_query_
     from .tools import checkMultiQueryInFile, addHook, removeHook, addSpaceAfterComma
     from .tools import removeNewlineTagOnLastEntry, checkIfSubstringSurroundingIsSpaces
     from .tools import replaceSpecificOccurencesOfSubstringInString, isFunction
-    from .tools import removeTrailingSpacesOnLastEntry
+    from .tools import removeTrailingSpacesOnLastEntry, appendSpacesOnLastEntry
 else:
     from sql_query_configuration import Constants, SQLKeywords, SQLMultiKeywords
     from sql_query_configuration import RegularExpressions, Messages
@@ -27,7 +27,7 @@ else:
     from tools import checkMultiQueryInFile, addHook, removeHook, addSpaceAfterComma
     from tools import removeNewlineTagOnLastEntry, checkIfSubstringSurroundingIsSpaces
     from tools import replaceSpecificOccurencesOfSubstringInString, isFunction
-    from tools import removeTrailingSpacesOnLastEntry
+    from tools import removeTrailingSpacesOnLastEntry, appendSpacesOnLastEntry
 
 
 __version__ = '0.0.b4'
@@ -497,7 +497,8 @@ def insertNewLineAndSpaces(query: list, prespaces=Constants.EMPTY_SPACE.value, b
                         else:
                             _ps = Constants.EMPTY_SPACE.value
                         
-                    if "".join(result[-2:])[-2:] in ["=(", "<(", ">("] or "".join(result[-2:]) in [" IN ("]:
+                    #if "".join(result[-2:])[-2:] in ["=(", "<(", ">("] or "".join(result[-2:]) in [" IN ("]:
+                    if "".join(result[-2:])[-2:] in ["=(", "<(", ">("] or "".join(result[-2:]).endswith(Constants.PARENTHESIS_OPEN.value):    
                         _newline = True
                         _ps += Constants.FOUR_SPACES.value
                     elif result[-1].strip() in keywords_setseparator:
@@ -670,10 +671,17 @@ def insertNewLineAndSpaces(query: list, prespaces=Constants.EMPTY_SPACE.value, b
                             _temp_spaces = Constants.EMPTY_SPACE.value
                         else:
                             _temp_spaces = spaces
+                    # elif query[k+1] in keywords_newblock:
+                    #     result = removeNewlineTagOnLastEntry(result)
+                    #     _temp_spaces = Constants.MONO_SPACE.value
                     else:
                         _within_subblock += 1
                         _latest_within.append("subblock")
-                        result[k-1] = result[k-1].rstrip(Constants.NEW_LINE.value)
+                        result = removeNewlineTagOnLastEntry(result)                        
+                        if query[k+1] in keywords_newblock and result[k-1][-1] != Constants.MONO_SPACE.value:
+                            #result[k-1] = result[k-1] + Constants.MONO_SPACE.value
+                            result = appendSpacesOnLastEntry(result, n=1)
+
                     
                 elif element==")":
                     if (_is_within_function + _is_within_or_block + _within_subblock) == _level_block_listagg and _is_within_listagg:
