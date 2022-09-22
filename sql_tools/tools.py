@@ -67,7 +67,7 @@ def getCaseSignature(string: str):
 
 def allIndex(substring: str, string: str, case_sensitive: bool = True):
     """Return the index of all occurences of a substring within a string"""
-    substring = substring.replace('|', '\|')
+    substring = substring.replace('|', '\|').replace("*", "\*")
     if case_sensitive:
         return [match.start() for match in re.finditer(substring, string)]
     else:
@@ -249,6 +249,11 @@ def removeTrailingSpacesOnLastEntry(result: list, k: int =None) -> list:
     if k is None:
         k = -1
     result[k] = result[k].rstrip(Constants.MONO_SPACE.value)
+    return result
+
+def appendSpacesOnLastEntry(result: list, n: int =1) -> list:
+    """Append k spaces to the last entry of the list"""
+    result[-1] = result[-1] + n * Constants.MONO_SPACE.value
     return result
 
 def checkMultiQueryInFile(query: str):

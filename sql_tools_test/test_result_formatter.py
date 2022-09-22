@@ -165,6 +165,10 @@ def test_myQuery20a():
     result = formatter(myQuery20a, show_spaces=True)
     assert result == myQuery20a_expected_surrogate
 
+def test_myQuery30a():
+    result = formatter(myQuery30a, show_spaces=True)
+    assert result == myQuery30a_expected_surrogate
+
 if __name__ == "__main__":
     print(formatter("select * from pyd01;"))
     test_myQuery1a()

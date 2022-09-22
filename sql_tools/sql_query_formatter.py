@@ -11,23 +11,25 @@ from enum import Enum
 if __name__ in ['sql_tools.sql_query_formatter', 'sql_tools.sql_tools.sql_query_formatter']:
     from .sql_query_configuration import Constants, SQLKeywords, SQLMultiKeywords
     from .sql_query_configuration import RegularExpressions, Messages
+    from .sql_query_validity import Validator
     #from sql_query_formatter_test import *
     from .tools import readConfigFile, readFile, writeOutputFile, forwardCheckIfInORBlock
     from .tools import checkIfPreviousEndswithNewlineTag, configValidator, allIndex
     from .tools import checkMultiQueryInFile, addHook, removeHook, addSpaceAfterComma
     from .tools import removeNewlineTagOnLastEntry, checkIfSubstringSurroundingIsSpaces
     from .tools import replaceSpecificOccurencesOfSubstringInString, isFunction
-    from .tools import removeTrailingSpacesOnLastEntry
+    from .tools import removeTrailingSpacesOnLastEntry, appendSpacesOnLastEntry
 else:
     from sql_query_configuration import Constants, SQLKeywords, SQLMultiKeywords
     from sql_query_configuration import RegularExpressions, Messages
+    from sql_query_validity import Validator
     #from sql_query_formatter_test import *
     from tools import readConfigFile, readFile, writeOutputFile, forwardCheckIfInORBlock
     from tools import checkIfPreviousEndswithNewlineTag, configValidator, allIndex
     from tools import checkMultiQueryInFile, addHook, removeHook, addSpaceAfterComma
     from tools import removeNewlineTagOnLastEntry, checkIfSubstringSurroundingIsSpaces
     from tools import replaceSpecificOccurencesOfSubstringInString, isFunction
-    from tools import removeTrailingSpacesOnLastEntry
+    from tools import removeTrailingSpacesOnLastEntry, appendSpacesOnLastEntry
 
 
 __version__ = '0.0.b4'
@@ -497,7 +499,8 @@ def insertNewLineAndSpaces(query: list, prespaces=Constants.EMPTY_SPACE.value, b
                         else:
                             _ps = Constants.EMPTY_SPACE.value
                         
-                    if "".join(result[-2:])[-2:] in ["=(", "<(", ">("] or "".join(result[-2:]) in [" IN ("]:
+                    #if "".join(result[-2:])[-2:] in ["=(", "<(", ">("] or "".join(result[-2:]) in [" IN ("]:
+                    if "".join(result[-2:])[-2:] in ["=(", "<(", ">("] or "".join(result[-2:]).endswith(Constants.PARENTHESIS_OPEN.value):    
                         _newline = True
                         _ps += Constants.FOUR_SPACES.value
                     elif result[-1].strip() in keywords_setseparator:
@@ -670,10 +673,16 @@ def insertNewLineAndSpaces(query: list, prespaces=Constants.EMPTY_SPACE.value, b
                             _temp_spaces = Constants.EMPTY_SPACE.value
                         else:
                             _temp_spaces = spaces
+                    # elif query[k+1] in keywords_newblock:
+                    #     result = removeNewlineTagOnLastEntry(result)
+                    #     _temp_spaces = Constants.MONO_SPACE.value
                     else:
                         _within_subblock += 1
                         _latest_within.append("subblock")
-                        result[k-1] = result[k-1].rstrip(Constants.NEW_LINE.value)
+                        result = removeNewlineTagOnLastEntry(result)                        
+                        if query[k+1] in keywords_newblock and result[k-1][-1] != Constants.MONO_SPACE.value:
+                            result = appendSpacesOnLastEntry(result, n=1)
+
                     
                 elif element==")":
                     if (_is_within_function + _is_within_or_block + _within_subblock) == _level_block_listagg and _is_within_listagg:
@@ -851,7 +860,7 @@ def removeEscapeCharacters(query: str) -> str:
         query = query.replace(item, item.replace("\\", ""))
     return query
 
-def formatter(query: str, show_spaces=False, inline=False, **kwargs) -> str:
+def formatter(query: str, show_spaces=False, inline=False, validate=False, **kwargs) -> str:
     """Format a query"""
     logging.debug(f"original raw query: |{repr(query)}|")
     logging.debug(f"original query: |{query}|")
@@ -871,10 +880,17 @@ def formatter(query: str, show_spaces=False, inline=False, **kwargs) -> str:
     myquery = ungroupMultiKeywords(myquery)
     myquery = caseSQLKeywords(myquery, kwargs.get("KEYWORDS_CASE", None), True)
     myquery = removeEscapeCharacters(myquery)
+
     if show_spaces:
-        return myquery.replace(Constants.MONO_SPACE.value, Constants.SURROGATE.value)
+        myquery = myquery.replace(Constants.MONO_SPACE.value, Constants.SURROGATE.value)
+
+    if validate:
+        validator = Validator(myquery)
+        validator.validateBracket()
+        return validator
     else:
         return myquery
+
 
 def print_expected_output(query_name:str) -> None:
     """Print an *_expected SQL query used for the unit test(s)"""
@@ -1036,15 +1052,18 @@ def main(args=None):
     myqueries = checkMultiQueryInFile(_myqueries)
     logging.info(f"Number of query(ies) detected: {len(myqueries)}")
     logging.info("Formating process: STARTING ...")
+    validate = True
     result = ''
     for key, myquery in myqueries.items():
         if len(myqueries) > 1:
             result += f"{2*Constants.NEW_LINE.value if key>0 else ''}/* Query {key+1} */{Constants.NEW_LINE.value}"
 
-        result += formatter(myquery, show_spaces=args.showSpaces, inline=args.inline, **config)
+        if validate:
+            v = formatter(myquery, show_spaces=args.showSpaces, inline=args.inline, validate=validate, **config)
+            result += v.query
+        else:
+            result += formatter(myquery, show_spaces=args.showSpaces, inline=args.inline, validate=validate, **config)
         
-
-
     logging.info("Formating process: DONE")
 
     if args.outputFile:

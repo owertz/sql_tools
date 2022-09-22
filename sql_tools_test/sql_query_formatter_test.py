@@ -42,6 +42,7 @@ queries_for_unittest = [
     "myQuery7a", "myQuery7b", "myQuery7c",
     "myQuery10a",
     "myQuery20a",
+    "myQuery30a",
 ]
 
 
@@ -306,6 +307,12 @@ myQuery10a_expected_surrogate = myQuery10a_expected.replace(Constants.MONO_SPACE
 myQuery20a = """delete from epk.xod10 where refopn='B9F25XO00000001Z';"""
 myQuery20a_expected = f"DELETE⎵FROM{Constants.NEW_LINE.value}{Constants.FOUR_SPACES.value}epk.xod10{Constants.NEW_LINE.value}WHERE{Constants.NEW_LINE.value}{Constants.FOUR_SPACES.value}refopn{Constants.MONO_SPACE.value}={Constants.MONO_SPACE.value}'B9F25XO00000001Z'{Constants.NEW_LINE.value};"
 myQuery20a_expected_surrogate = myQuery20a_expected.replace(Constants.MONO_SPACE.value, Constants.SURROGATE.value)
+
+
+# INSERT
+myQuery30a = """insert into epk.cwd32 (select * from epk.cwd32a where XXX);"""
+myQuery30a_expected = f"INSERT{Constants.MONO_SPACE.value}INTO{Constants.NEW_LINE.value}{Constants.FOUR_SPACES.value}epk.cwd32{Constants.MONO_SPACE.value}({Constants.NEW_LINE.value}{Constants.EIGHT_SPACES.value}SELECT{Constants.NEW_LINE.value}{Constants.TWELVE_SPACES.value}*{Constants.NEW_LINE.value}{Constants.EIGHT_SPACES.value}FROM{Constants.NEW_LINE.value}{Constants.TWELVE_SPACES.value}epk.cwd32a{Constants.NEW_LINE.value}{Constants.EIGHT_SPACES.value}WHERE{Constants.NEW_LINE.value}{Constants.TWELVE_SPACES.value}xxx{Constants.NEW_LINE.value}{Constants.FOUR_SPACES.value}){Constants.NEW_LINE.value};"
+myQuery30a_expected_surrogate = myQuery30a_expected.replace(Constants.MONO_SPACE.value, Constants.SURROGATE.value)
 
 
 # TEST
