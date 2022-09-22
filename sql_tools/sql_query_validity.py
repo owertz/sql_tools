@@ -83,7 +83,7 @@ def cleanQuery(query: str, mode=None):
             elif character in [Constants.SIMPLE_QUOTE.value, Constants.DOUBLE_QUOTE.value] and _in_value:
                 _in_value = False
                 continue
-            elif not _in_comment and indices_comments[K][0] <= k <= indices_comments[K][1]:
+            elif not _in_comment and indices_comments and indices_comments[K][0] <= k <= indices_comments[K][1]:
                 _in_comment = True
                 continue
             elif _in_comment and k-1 == indices_comments[K][1]:
@@ -104,16 +104,23 @@ def cleanQuery(query: str, mode=None):
     return result
 
 
-def validityBracket(query: str):
-    """Check whether the number of open and close brackets matches."""
-    result = {}
+class Validator():
+    """Dto for the query validation"""
+    def __init__(self, query: str):
+        self.query = query
+        self.bracket = None
 
-    query = cleanQuery(query)
-    for key, value in Constants.BRACKET_REPERTOIRE.value.items():
-        result[key] = query.count(value["open"]) == query.count(value["close"])
+    def validateBracket(self):
+        """
+        Check whether the number of open and close brackets matches, 
+        excluding the comments and values.
+        """
+        result = {}
+        query = cleanQuery(self.query)
+        for key, value in Constants.BRACKET_REPERTOIRE.value.items():
+            result[key] = query.count(value["open"]) == query.count(value["close"])
 
-    return all(result.values()), result
-
+        self.bracket = all(result.values())
 
 
 def main():
@@ -122,9 +129,9 @@ def main():
     print(query)
     print('')
 
-    valid, output = validityBracket(query)
-    print(valid)
-    print(output)
+    validator = Validator(query)
+    validator.validateBracket()
+    print(validator.bracket)
 
 if __name__ == "__main__":
     main()

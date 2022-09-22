@@ -11,6 +11,7 @@ from enum import Enum
 if __name__ in ['sql_tools.sql_query_formatter', 'sql_tools.sql_tools.sql_query_formatter']:
     from .sql_query_configuration import Constants, SQLKeywords, SQLMultiKeywords
     from .sql_query_configuration import RegularExpressions, Messages
+    from .sql_query_validity import Validator
     #from sql_query_formatter_test import *
     from .tools import readConfigFile, readFile, writeOutputFile, forwardCheckIfInORBlock
     from .tools import checkIfPreviousEndswithNewlineTag, configValidator, allIndex
@@ -21,6 +22,7 @@ if __name__ in ['sql_tools.sql_query_formatter', 'sql_tools.sql_tools.sql_query_
 else:
     from sql_query_configuration import Constants, SQLKeywords, SQLMultiKeywords
     from sql_query_configuration import RegularExpressions, Messages
+    from sql_query_validity import Validator
     #from sql_query_formatter_test import *
     from tools import readConfigFile, readFile, writeOutputFile, forwardCheckIfInORBlock
     from tools import checkIfPreviousEndswithNewlineTag, configValidator, allIndex
@@ -858,7 +860,7 @@ def removeEscapeCharacters(query: str) -> str:
         query = query.replace(item, item.replace("\\", ""))
     return query
 
-def formatter(query: str, show_spaces=False, inline=False, **kwargs) -> str:
+def formatter(query: str, show_spaces=False, inline=False, validate=False, **kwargs) -> str:
     """Format a query"""
     logging.debug(f"original raw query: |{repr(query)}|")
     logging.debug(f"original query: |{query}|")
@@ -878,10 +880,17 @@ def formatter(query: str, show_spaces=False, inline=False, **kwargs) -> str:
     myquery = ungroupMultiKeywords(myquery)
     myquery = caseSQLKeywords(myquery, kwargs.get("KEYWORDS_CASE", None), True)
     myquery = removeEscapeCharacters(myquery)
+
     if show_spaces:
-        return myquery.replace(Constants.MONO_SPACE.value, Constants.SURROGATE.value)
+        myquery = myquery.replace(Constants.MONO_SPACE.value, Constants.SURROGATE.value)
+
+    if validate:
+        validator = Validator(myquery)
+        validator.validateBracket()
+        return validator
     else:
         return myquery
+
 
 def print_expected_output(query_name:str) -> None:
     """Print an *_expected SQL query used for the unit test(s)"""
@@ -1043,15 +1052,18 @@ def main(args=None):
     myqueries = checkMultiQueryInFile(_myqueries)
     logging.info(f"Number of query(ies) detected: {len(myqueries)}")
     logging.info("Formating process: STARTING ...")
+    validate = True
     result = ''
     for key, myquery in myqueries.items():
         if len(myqueries) > 1:
             result += f"{2*Constants.NEW_LINE.value if key>0 else ''}/* Query {key+1} */{Constants.NEW_LINE.value}"
 
-        result += formatter(myquery, show_spaces=args.showSpaces, inline=args.inline, **config)
+        if validate:
+            v = formatter(myquery, show_spaces=args.showSpaces, inline=args.inline, validate=validate, **config)
+            result += v.query
+        else:
+            result += formatter(myquery, show_spaces=args.showSpaces, inline=args.inline, validate=validate, **config)
         
-
-
     logging.info("Formating process: DONE")
 
     if args.outputFile:
