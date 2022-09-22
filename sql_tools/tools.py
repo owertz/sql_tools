@@ -67,7 +67,7 @@ def getCaseSignature(string: str):
 
 def allIndex(substring: str, string: str, case_sensitive: bool = True):
     """Return the index of all occurences of a substring within a string"""
-    substring = substring.replace('|', '\|')
+    substring = substring.replace('|', '\|').replace("*", "\*")
     if case_sensitive:
         return [match.start() for match in re.finditer(substring, string)]
     else:

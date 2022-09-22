@@ -679,7 +679,6 @@ def insertNewLineAndSpaces(query: list, prespaces=Constants.EMPTY_SPACE.value, b
                         _latest_within.append("subblock")
                         result = removeNewlineTagOnLastEntry(result)                        
                         if query[k+1] in keywords_newblock and result[k-1][-1] != Constants.MONO_SPACE.value:
-                            #result[k-1] = result[k-1] + Constants.MONO_SPACE.value
                             result = appendSpacesOnLastEntry(result, n=1)
 
                     
