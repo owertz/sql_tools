@@ -27,9 +27,10 @@ def sqlqueryformatter(myquery=None):
         myquery = ''
 
     if request.method == 'POST':
-        query_formatted = main_formatter(request.form['content'])
+        query_formatted, warnings = main_formatter(request.form['content'])
         print(query_formatted)
-        return render_template('sqlqueryformatter.html', myquery=query_formatted)
+        print(warnings)
+        return render_template('sqlqueryformatter.html', myquery=query_formatted, warnings=warnings)
     return render_template('sqlqueryformatter.html', myquery=myquery)
 
 

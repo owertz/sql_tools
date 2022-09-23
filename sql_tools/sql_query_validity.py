@@ -109,6 +109,10 @@ class Validator():
     def __init__(self, query: str):
         self.query = query
         self.bracket = None
+        self.bracket_parenthesis = None
+        self.bracket_squarebracket = None
+        self.bracket_curlybracket = None
+
 
     def validateBracket(self):
         """
@@ -121,6 +125,9 @@ class Validator():
             result[key] = query.count(value["open"]) == query.count(value["close"])
 
         self.bracket = all(result.values())
+        self.bracket_parenthesis = result["parenthesis"]
+        self.bracket_squarebracket = result["square"]
+        self.bracket_curlybracket = result["curly"]
 
 
 def main():

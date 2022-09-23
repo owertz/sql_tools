@@ -1,4 +1,5 @@
 import argparse
+from ast import Constant
 import logging
 import os
 import re
@@ -948,7 +949,7 @@ def main_formatter(query):
     #    return Constants.EMPTY_SPACE.value
 
     if query.strip() == Constants.EMPTY_SPACE.value:
-        return Messages.YODA.value + Constants.MONO_SPACE.value + Messages.QUERY_EMPTY.value
+        return Messages.YODA.value + Constants.MONO_SPACE.value + Messages.QUERY_EMPTY.value, Constants.EMPTY_SPACE.value
 
     MODULE_PATH = os.path.dirname(os.path.realpath(__file__))
     MAIN_PATH = os.path.abspath(os.path.join(MODULE_PATH, '..'))
@@ -978,18 +979,35 @@ def main_formatter(query):
 
     myqueries = checkMultiQueryInFile(query)
     result = ''
+    warning_messages = {}
+    warnings = ''
     config = {
         'KEYWORD_CASE': 'upperCase',
     }
     logging.info(f"Number of identified queries?: {len(myqueries)}")
 
     for key, myquery in myqueries.items():
+        warning_messages[key] = []
         if len(myqueries) > 1:
             result += f"{2*Constants.NEW_LINE.value if key>0 else ''}/* Query {key+1} */{Constants.NEW_LINE.value}"
 
-        result += formatter(myquery, show_spaces=False, inline=False, **config)
-            
-    return result
+        v = formatter(myquery, show_spaces=False, inline=False, validate=True, **config)
+        result += v.query
+
+        if not v.bracket:
+            if not v.bracket_parenthesis:
+                warning_messages[key] = warning_messages[key] + [Messages.WARNING_MISSING_PARENTHESIS.value.format(query_id=key+1)]
+
+            if not v.bracket_squarebracket:
+                warning_messages[key] = warning_messages[key] + [Messages.WARNING_MISSING_SQUAREBRACKET.value.format(query_id=key+1)] 
+
+            if not v.bracket_curlybracket:
+                warning_messages[key] = warning_messages[key] + [Messages.WARNING_MISSING_CURLYBRACKET.value.format(query_id=key+1)]     
+
+            if warning_messages[key]:
+                warnings += Constants.NEW_LINE.value + f"WARNING:{Constants.NEW_LINE.value}" + f"{Constants.NEW_LINE.value}".join(warning_messages[key])    
+   
+    return result, warnings
 
 def main(args=None):
     """The main function to run when using it as a script"""
