@@ -35,6 +35,10 @@ class Messages(Enum):
     QUERY_EMPTY = "Than an empty query, better you can do."
     YODA = "<(°.°)>"
 
+    WARNING_MISSING_BRACKET_GENERIC = "Your query {query_id} might have an exceeding/missing "
+    WARNING_MISSING_PARENTHESIS = WARNING_MISSING_BRACKET_GENERIC + "( or )."
+    WARNING_MISSING_SQUAREBRACKET = WARNING_MISSING_BRACKET_GENERIC + "[ or ]."
+    WARNING_MISSING_CURLYBRACKET = WARNING_MISSING_BRACKET_GENERIC + "{ or }."
 
 class Constants(Enum):
     """Define some constants"""
@@ -75,11 +79,11 @@ class Constants(Enum):
             "open": "(",
             "close": ")"
         },
-        "squared": {
+        "square": {
             "open": "[",
             "close": "]"
         },
-        "curled": {
+        "curly": {
             "open": "{",
             "close": "}"
         }
