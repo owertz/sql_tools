@@ -14,13 +14,9 @@
         <nav class="navbar navbar-expand-md navbar-light" style="background-color: #e3f2fd;">
             {% block navbar_title %} {% endblock %}
             {% block navbar_content %} {% endblock %}
-            <!--div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav">
-                <li class="nav-item active">
-                    <a class="nav-link" href="{{ url_for('sqlqueryformatter')}}">About</a>
-                </li>
-                </ul>
-            </div-->
+            <a class="navbar-brand" href="https://www.soprabanking.com/" target="_blank">
+                <img src="..\static\img\LogoSVGColorBlack.svg" width="300" height="50" class="d-inline-block align-right" alt=""> 
+            </a>
         </nav>
         <div class="container">
             {% block content %} {% endblock %}
