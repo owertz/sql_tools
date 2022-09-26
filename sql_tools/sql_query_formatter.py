@@ -897,14 +897,14 @@ def print_expected_output(query_name:str) -> None:
     """Print an *_expected SQL query used for the unit test(s)"""
     print(globals()[f"{query_name}_expected"])
 
-def unittest(query: str, verbose=False):
-    """Make a unittest on SQL query"""
-    logging.debug(f"{Constants.LINE_SEPARATOR_DASH.value}{Constants.NEW_LINE.value}UNIT TEST{Constants.NEW_LINE.value}")
-    expected_output = globals()[f"{query}_expected_surrogate"]
-    output = formatter(globals()[f"{query}"], True)
-    logging.debug(f"Final result: {Constants.NEW_LINE.value}{output.replace(Constants.SURROGATE.value, Constants.MONO_SPACE.value)}")
-    assert output==expected_output, f"\nUnit test {query} failed.\n{Constants.LINE_SEPARATOR_UNDERSCORE.value}\n\nExpected output\n{Constants.LINE_SEPARATOR_UNDERSCORE.value}\n{expected_output}\n{Constants.LINE_SEPARATOR_UNDERSCORE.value}\n\nOutput:\n{Constants.LINE_SEPARATOR_UNDERSCORE.value}\n{output}\n{Constants.LINE_SEPARATOR_UNDERSCORE.value}"
-    logging.debug(f"{Constants.NEW_LINE.value}UNIT TEST COMPLETED{Constants.NEW_LINE.value}{Constants.LINE_SEPARATOR_DASH.value}{Constants.NEW_LINE.value}")
+# def unittest(query: str, verbose=False):
+#     """Make a unittest on SQL query"""
+#     logging.debug(f"{Constants.LINE_SEPARATOR_DASH.value}{Constants.NEW_LINE.value}UNIT TEST{Constants.NEW_LINE.value}")
+#     expected_output = globals()[f"{query}_expected_surrogate"]
+#     output = formatter(globals()[f"{query}"], True)
+#     logging.debug(f"Final result: {Constants.NEW_LINE.value}{output.replace(Constants.SURROGATE.value, Constants.MONO_SPACE.value)}")
+#     assert output==expected_output, f"\nUnit test {query} failed.\n{Constants.LINE_SEPARATOR_UNDERSCORE.value}\n\nExpected output\n{Constants.LINE_SEPARATOR_UNDERSCORE.value}\n{expected_output}\n{Constants.LINE_SEPARATOR_UNDERSCORE.value}\n\nOutput:\n{Constants.LINE_SEPARATOR_UNDERSCORE.value}\n{output}\n{Constants.LINE_SEPARATOR_UNDERSCORE.value}"
+#     logging.debug(f"{Constants.NEW_LINE.value}UNIT TEST COMPLETED{Constants.NEW_LINE.value}{Constants.LINE_SEPARATOR_DASH.value}{Constants.NEW_LINE.value}")
 
 class MyParser:
     """
@@ -1049,18 +1049,6 @@ def main(args=None):
         args = args
 
     logging.info(f"Script arguments: {args}")
-
-    # if args.unitTestOnly or config.get('UNITTEST', False)=='true':
-    #     for _q in queries_for_unittest:
-    #         unittest(_q)
-    #     print(f"{len(queries_for_unittest)} unit tests passed successfully.\n")
-    #     logging.info(f"{len(queries_for_unittest)} unit tests passed successfully.")
-    #     if args.unitTestOnly:
-    #         return None
-
-    # myquery = "myQuery6b"
-    # result = formatter(globals()[f"{myquery}"], args.showSpaces)
-    # logging.debug(f"Final result: {Constants.NEW_LINE.value}{result}")
 
     _myqueries = "".join(readFile(INPUTFILE_PATH))
     if _myqueries.strip() == Constants.EMPTY_SPACE.value:
