@@ -32,9 +32,6 @@ else:
     from tools import replaceSpecificOccurencesOfSubstringInString, isFunction
     from tools import removeTrailingSpacesOnLastEntry, appendSpacesOnLastEntry
 
-
-__version__ = '0.0.b4'
-__author__ = 'OWE'
     
 """
 This script aims at formatting a SQL query in a easy-reading way, following

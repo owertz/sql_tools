@@ -10,8 +10,6 @@ if __name__ in ["sql_tools.sql_tools_test.sql_query_formatter_test"]:
 else:
     from sql_tools.sql_query_configuration import Constants
 
-__version__ = '0.0.1'
-__author__ = 'OWE'
 
 """
 This file contains a set of SQL queries used to perform unit testing on 'sql_query_formatter.py' script.
