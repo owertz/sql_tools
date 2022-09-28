@@ -7,8 +7,6 @@ from enum import Enum
 
 #print("OWEOWE -- sql_query_configuration -- ", __name__)
 
-__version__ = '0.0.b4'
-__author__ = 'OWE'
 
 """
 This file contains a set of SQL queries used to perform unit testing on 'sql_query_formatter.py' script.
